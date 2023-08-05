@@ -1,4 +1,3 @@
-import { debounce, throttle } from './throttle.js';
 const getSize = () => {
 	const width = window.innerWidth;
 	if (width < 640) return 'xs';
@@ -328,12 +327,12 @@ export const dragScroll = (
 		}
 	});
 
-	const debouncedScroll = throttle(() => {
+	const debouncedScroll = () => {
 		console.log('debouncedScroll');
 		currentSlide = getCurrentSlide();
 		emitChange();
 		startPlay();
-	}, 100);
+	};
 
 	const onScroll = (e: Event) => {
 		e.stopPropagation();
