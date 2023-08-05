@@ -53,77 +53,77 @@
 	];
 
 	let examples = [
-		// {
-		// 	component: SimpleCarousel,
-		// 	name: 'Simple Carousel',
-		// 	description: 'A simple carousel with no controls or progress bar',
-		// 	code: simpleCarouselCode,
-		// 	preview: false
-		// },
-		// {
-		// 	component: CarouselWithDots,
-		// 	name: 'Carousel with dots',
-		// 	description: 'A carousel with dots to indicate the current slide',
-		// 	code: CarouselWithDotsCode,
-		// 	preview: true
-		// },
-		// {
-		// 	component: CarouselWithProgress,
-		// 	name: 'Carousel with progress bar',
-		// 	description: 'A carousel with a progress bar to indicate the current slide',
-		// 	code: CarouselWithProgressCode,
-		// 	preview: true
-		// },
+		{
+			component: SimpleCarousel,
+			name: 'Simple Carousel',
+			description: 'A simple carousel with no controls or progress bar',
+			code: simpleCarouselCode,
+			preview: false
+		},
+		{
+			component: CarouselWithDots,
+			name: 'Carousel with dots',
+			description: 'A carousel with dots to indicate the current slide',
+			code: CarouselWithDotsCode,
+			preview: true
+		},
+		{
+			component: CarouselWithProgress,
+			name: 'Carousel with progress bar',
+			description: 'A carousel with a progress bar to indicate the current slide',
+			code: CarouselWithProgressCode,
+			preview: true
+		},
 		{
 			component: CarouselWithArrows,
 			name: 'Carousel with arrows',
 			description: 'A carousel with arrows to navigate between slides',
 			code: CarouselWithArrowsCode,
 			preview: true
-		}
-		// {
-		// 	component: CarouselWithPagination,
-		// 	name: 'Carousel with pagination',
-		// 	description: 'A carousel with pagination to navigate between slides',
-		// 	code: CarouselWithPaginationCode,
-		// 	preview: true
-		// },
-		// {
-		// 	component: CarouselResponsive,
-		// 	name: 'Carousel responsive',
-		// 	description: 'A carousel with responsive layout',
-		// 	code: CarouselResponsiveCode,
-		// 	preview: true
-		// },
-		// {
-		// 	component: DragFreeCarousel,
-		// 	name: 'Drag free carousel',
-		// 	description: 'A carousel with drag free option',
-		// 	code: fragFreeCarouselCode,
-		// 	preview: true
-		// },
-		// {
-		// 	component: AutoPlayCarousel,
-		// 	name: 'Auto play carousel',
-		// 	description: 'A carousel with auto play option',
+		},
+		{
+			component: CarouselWithPagination,
+			name: 'Carousel with pagination',
+			description: 'A carousel with pagination to navigate between slides',
+			code: CarouselWithPaginationCode,
+			preview: true
+		},
+		{
+			component: CarouselResponsive,
+			name: 'Carousel responsive',
+			description: 'A carousel with responsive layout',
+			code: CarouselResponsiveCode,
+			preview: true
+		},
+		{
+			component: DragFreeCarousel,
+			name: 'Drag free carousel',
+			description: 'A carousel with drag free option',
+			code: fragFreeCarouselCode,
+			preview: true
+		},
+		{
+			component: AutoPlayCarousel,
+			name: 'Auto play carousel',
+			description: 'A carousel with auto play option',
 
-		// 	code: autoPlayCarouselCode,
-		// 	preview: true
-		// },
-		// {
-		// 	component: PartialViewCarousel,
-		// 	name: 'Partial view carousel',
-		// 	description: 'A carousel with partial view option',
-		// 	code: partialViewCarouselCode,
-		// 	preview: true
-		// },
-		// {
-		// 	component: VerticalCarousel,
-		// 	name: 'Vertical carousel',
-		// 	description: 'A carousel with vertical layout',
-		// 	code: verticalCarouselCode,
-		// 	preview: true
-		// }
+			code: autoPlayCarouselCode,
+			preview: true
+		},
+		{
+			component: PartialViewCarousel,
+			name: 'Partial view carousel',
+			description: 'A carousel with partial view option',
+			code: partialViewCarouselCode,
+			preview: true
+		},
+		{
+			component: VerticalCarousel,
+			name: 'Vertical carousel',
+			description: 'A carousel with vertical layout',
+			code: verticalCarouselCode,
+			preview: true
+		}
 	];
 
 	const copy = (e: MouseEvent) => {
