@@ -8,7 +8,7 @@ const getSize = () => {
 	return 'xl';
 };
 export type Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'default';
-export type ResponsiveProperty = Partial<Record<Sizes, number>>;
+export type ResponsiveProperty<T = number> = Partial<Record<Sizes, T>>;
 
 interface DragScrollParameters {
 	enabled?: boolean;
@@ -120,6 +120,7 @@ export const dragScroll = (
 
 	const handleMouseDown = (e: PointerEvent | MouseEvent) => {
 		isDown = true;
+		node.setAttribute('data-dragging', 'true');
 		startTime = Date.now();
 		mouseTargetedSlide = e.composedPath().find((el) => {
 			return !!(el as HTMLElement).dataset?.['carouselSlide'];
@@ -283,6 +284,8 @@ export const dragScroll = (
 				} else {
 					node.scrollTop = target;
 				}
+				node.setAttribute('data-dragging', 'false');
+
 				setTimeout(() => {
 					ongoingAnimation = false;
 				}, 110);
@@ -337,6 +340,7 @@ export const dragScroll = (
 	}, 100);
 
 	const onScroll = (e: Event) => {
+		e.stopPropagation();
 		if (!isDown && !ongoingAnimation) {
 			debouncedScroll();
 		}

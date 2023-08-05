@@ -50,6 +50,9 @@
 	export let key: keyof Slide | undefined = undefined;
 	export let axis: 'x' | 'y' = 'x';
 	export let dragFree: boolean = false;
+	export let disableNativeScroll: ResponsiveProperty<boolean> = {
+		default: false
+	};
 	export let oneAtTime: boolean = false;
 	export let autoHeight: boolean = axis === 'y';
 	export let autoPlay: number = 0;
@@ -116,6 +119,8 @@
 			data-carousel-slider
 			data-carousel-with-grab-cursor={withGrabCursor}
 			data-carousel-axis={axis}
+			data-dragging="false"
+			data-drag-free={dragFree}
 			use:dragScroll={{
 				layout,
 				autoHeight,
@@ -142,6 +147,21 @@
 			style:--padding-xl={`${axis === 'x' ? '0 ' : ''}${gaps.xl || gaps.default || 0}px ${
 				axis === 'x' ? '' : '0'
 			}`}
+			style:--overflow-xs={axis === 'x'
+				? `${disableNativeScroll.xs ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
+				: `visible ${disableNativeScroll.xs || disableNativeScroll.default ? 'hidden' : 'auto'}`}
+			style:--overflow-sm={axis === 'x'
+				? `${disableNativeScroll.sm ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
+				: `visible ${disableNativeScroll.sm || disableNativeScroll.default ? 'hidden' : 'auto'}`}
+			style:--overflow-md={axis === 'x'
+				? `${disableNativeScroll.md ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
+				: `visible ${disableNativeScroll.md || disableNativeScroll.default ? 'hidden' : 'auto'}`}
+			style:--overflow-lg={axis === 'x'
+				? `${disableNativeScroll.lg ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
+				: `visible ${disableNativeScroll.lg || disableNativeScroll.default ? 'hidden' : 'auto'}`}
+			style:--overflow-xl={axis === 'x'
+				? `${disableNativeScroll.xl ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
+				: `visible ${disableNativeScroll.xl || disableNativeScroll.default ? 'hidden' : 'auto'}`}
 			style:--layout-xs={`${100 / (layout.xs || layout.default || 1)}%`}
 			style:--layout-sm={`${100 / (layout.sm || layout.default || 2)}%`}
 			style:--layout-md={`${100 / (layout.md || layout.default || 2)}%`}
@@ -194,7 +214,6 @@
 		min-height: 100%;
 		display: flex;
 		flex-direction: column;
-
 		min-width: 100%;
 	}
 	[data-carousel-slider] {
@@ -206,7 +225,6 @@
 		flex-wrap: nowrap;
 		max-height: 100%;
 		max-width: 100%;
-		overflow: scroll;
 	}
 	[data-carousel-with-grab-cursor='true'] {
 		cursor: grab;
@@ -218,26 +236,29 @@
 		height: 100%;
 		list-style: none;
 	}
-	/*
-- calc(var(--gap-xs) / 2) - var(--partial-delta-xs));
-- calc(var(--gap-sm) / 2) - var(--partial-delta-sm));
-- calc(var(--gap-md) / 2) - var(--partial-delta-md));
-- calc(var(--gap-lg) / 2) - var(--partial-delta-lg));
-- calc(var(--gap-xl) / 2) - var(--partial-delta-xl));
-*/
+
 	@media (max-width: 640px) {
+		[data-carousel-slider] {
+			overflow: var(--overflow-xs);
+		}
 		[data-carousel-slider] > [data-carousel-slide] {
 			flex: 0 0 calc(var(--layout-xs) - var(--partial-delta-xs));
 			padding: var(--padding-xs);
 		}
 	}
 	@media (min-width: 640px) {
+		[data-carousel-slider] {
+			overflow: var(--overflow-sm);
+		}
 		[data-carousel-slider] > [data-carousel-slide] {
 			flex: 0 0 calc(var(--layout-sm) - var(--partial-delta-sm));
 			padding: var(--padding-sm);
 		}
 	}
 	@media (min-width: 768px) {
+		[data-carousel-slider] {
+			overflow: var(--overflow-md);
+		}
 		[data-carousel-slider] > [data-carousel-slide] {
 			flex: 0 0 calc(var(--layout-md) - var(--partial-delta-md));
 			padding: var(--padding-md);
@@ -245,12 +266,18 @@
 	}
 
 	@media (min-width: 1024px) {
+		[data-carousel-slider] {
+			overflow: var(--overflow-lg);
+		}
 		[data-carousel-slider] > [data-carousel-slide] {
 			flex: 0 0 calc(var(--layout-lg) - var(--partial-delta-lg));
 			padding: var(--padding-lg);
 		}
 	}
 	@media (min-width: 1280px) {
+		[data-carousel-slider] {
+			overflow: var(--overflow-xl);
+		}
 		[data-carousel-slider] > [data-carousel-slide] {
 			flex: 0 0 calc(var(--layout-xl) - var(--partial-delta-xl));
 			padding: var(--padding-xl);
@@ -269,12 +296,14 @@
 		scrollbar-width: none;
 	}
 
-	:global([data-carousel-slider][data-is-mobile='true']) {
+	:global([data-carousel-slider][data-dragging='false'][data-drag-free='false']) {
 		scroll-snap-type: var(--snap-type);
 		scroll-snap-type: mandatory;
 		scroll-behavior: smooth;
 	}
-	:global([data-carousel-slider][data-is-mobile='true'] > [data-carousel-slide]) {
+	:global(
+			[data-carousel-slider][data-dragging='false'][data-drag-free='false'] > [data-carousel-slide]
+		) {
 		scroll-snap-align: start;
 	}
 </style>

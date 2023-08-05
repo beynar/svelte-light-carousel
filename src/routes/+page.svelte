@@ -140,45 +140,42 @@
 		const target = e.target as HTMLElement;
 		const code = target.textContent;
 		target.innerHTML = 'Copied!';
-		const textarea = document.createElement('textarea');
-		textarea.value = code as string;
-		document.body.appendChild(textarea);
-		textarea.select();
 		navigator.clipboard.writeText(code as string);
-		document.body.removeChild(textarea);
 		setTimeout(() => {
 			target.textContent = code as string;
 		}, 1000);
 	};
 </script>
 
-<div class="mx-auto px-10 rounded my-10 max-w-5xl w-full py-10 prose prose-sm md:prose-base">
+<div
+	class="mx-auto md:px-10 px-4 rounded my-10 max-w-5xl w-full py-10 prose prose-sm md:prose-base"
+>
 	<h2>Svelte light carousel</h2>
 	<div class="mockup-code not-prose">
 		<pre
 			on:pointerdown={copy}
-			class="hover:bg-slate-100 cursor-pointer w-fit rounded"
+			class="hover:bg-slate-100 md:mx-10 cursor-pointer w-fit rounded"
 			data-prefix="$"><code>npm i svelte-light-carousel</code></pre>
 		<pre
 			on:pointerdown={copy}
-			class="hover:bg-slate-100 cursor-pointer w-fit rounded"
+			class="hover:bg-slate-100 md:mx-10 cursor-pointer w-fit rounded"
 			data-prefix="$"><code>pnpm add svelte-light-carousel</code></pre>
 		<pre
 			on:pointerdown={copy}
-			class="hover:bg-slate-100 cursor-pointer w-fit rounded"
+			class="hover:bg-slate-100 md:mx-10 cursor-pointer w-fit rounded"
 			data-prefix="$"><code>yarn add svelte-light-carousel</code></pre>
 	</div>
 	<h2>Features</h2>
-	<ul>
+	<ul class="px-0">
 		{#each features as feature}
-			<li class="flex max-h-8 items-center gap-2 !my-0">
+			<li class="flex h-fit items-start gap-2 !my-0">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
 					viewBox="0 0 24 24"
 					stroke-width="1.5"
 					stroke="currentColor"
-					class="w-6 h-6 stroke-primary"
+					class="w-6 h-6 stroke-primary !my-0"
 				>
 					<path
 						stroke-linecap="round"
@@ -186,7 +183,9 @@
 						d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
 					/>
 				</svg>
-				{feature}
+				<div class="flex-1">
+					{feature}
+				</div>
 			</li>
 		{/each}
 	</ul>
