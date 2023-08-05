@@ -139,7 +139,6 @@ export const dragScroll = (
 			if (axis === 'x') {
 				currentX = e.pageX - node.offsetLeft;
 				node.scrollLeft = startScroll - (currentX - startX);
-				console.log(node.scrollLeft);
 			} else {
 				currentY = e.pageY - node.offsetTop;
 				node.scrollTop = startScroll - (currentY - startY);
@@ -275,7 +274,7 @@ export const dragScroll = (
 			} else {
 				node.scrollTop = lerp(start, target, time);
 			}
-			time += 0.04;
+			time += 0.06;
 			if (time < 1) {
 				requestAnimationFrame(animateScroll);
 			} else {
@@ -286,7 +285,7 @@ export const dragScroll = (
 				}
 				setTimeout(() => {
 					ongoingAnimation = false;
-				}, 10);
+				}, 110);
 
 				currentSlide = getCurrentSlide();
 
@@ -328,19 +327,19 @@ export const dragScroll = (
 	});
 
 	const debouncedScroll = debounce(() => {
+		currentSlide = getCurrentSlide();
 		if (!dragFree && !isMobile) {
-			currentSlide = getCurrentSlide();
 			scrollTo(currentSlide);
 		} else {
 			emitChange();
 		}
+
 		startPlay();
-	}, 300);
+	}, 100);
 
 	const onScroll = (e: Event) => {
 		if (!isDown && !ongoingAnimation) {
-			e.stopPropagation();
-			e.preventDefault();
+			console.log('scroll');
 			debouncedScroll();
 		}
 	};
