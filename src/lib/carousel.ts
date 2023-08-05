@@ -214,7 +214,7 @@ export const dragScroll = (
 		const distanceY = Math.abs(currentY - startY);
 
 		if (axis === 'x') {
-			if (distanceX > 10) {
+			if (distanceX > 10 && distanceX > distanceY) {
 				const speedX = distanceX / time;
 				const direction = startX > currentX ? 1 : -1;
 				const multiplier = Math.ceil(Math.min(Math.max(Math.pow(speedX, 0.5), 0), 3));
@@ -237,7 +237,7 @@ export const dragScroll = (
 				startPlay();
 			}
 		} else {
-			if (distanceY > 10) {
+			if (distanceY > 10 && distanceY > distanceX) {
 				const speedY = distanceY / time;
 				const direction = startY > currentY ? 1 : -1;
 				const multiplier = Math.ceil(Math.min(Math.max(Math.pow(speedY, 0.5), 0), 3));
