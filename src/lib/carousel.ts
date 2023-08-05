@@ -306,7 +306,6 @@ export const dragScroll = (
 		slidesPerView = layout?.[getSize()] ?? layout?.['default'] ?? 1;
 		if (autoHeight && axis === 'y') {
 			const delta = partialDelta?.[getSize()] ?? partialDelta?.['default'] ?? 0;
-			console.log({ delta });
 			node.style.height = slideHeight * slidesPerView + delta + 'px';
 		}
 		onInit({
@@ -339,7 +338,6 @@ export const dragScroll = (
 
 	const onScroll = (e: Event) => {
 		if (!isDown && !ongoingAnimation) {
-			console.log('scroll');
 			debouncedScroll();
 		}
 	};

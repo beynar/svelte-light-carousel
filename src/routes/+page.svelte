@@ -30,7 +30,7 @@
 	import Prism from 'prismjs';
 	import 'prism-svelte';
 
-	import { slide } from 'svelte/transition';
+	import { scale, slide } from 'svelte/transition';
 
 	const features = [
 		'Lightweight, no dependencies < 2kb of JS and < 3kb of Svelte',
@@ -58,49 +58,56 @@
 			name: 'Simple Carousel',
 			description: 'A simple carousel with no controls or progress bar',
 			code: simpleCarouselCode,
-			preview: false
+			preview: false,
+			copied: false
 		},
 		{
 			component: CarouselWithDots,
 			name: 'Carousel with dots',
 			description: 'A carousel with dots to indicate the current slide',
 			code: CarouselWithDotsCode,
-			preview: true
+			preview: true,
+			copied: false
 		},
 		{
 			component: CarouselWithProgress,
 			name: 'Carousel with progress bar',
 			description: 'A carousel with a progress bar to indicate the current slide',
 			code: CarouselWithProgressCode,
-			preview: true
+			preview: true,
+			copied: false
 		},
 		{
 			component: CarouselWithArrows,
 			name: 'Carousel with arrows',
 			description: 'A carousel with arrows to navigate between slides',
 			code: CarouselWithArrowsCode,
-			preview: true
+			preview: true,
+			copied: false
 		},
 		{
 			component: CarouselWithPagination,
 			name: 'Carousel with pagination',
 			description: 'A carousel with pagination to navigate between slides',
 			code: CarouselWithPaginationCode,
-			preview: true
+			preview: true,
+			copied: false
 		},
 		{
 			component: CarouselResponsive,
 			name: 'Responsive carousel',
 			description: 'A carousel with responsive layout',
 			code: CarouselResponsiveCode,
-			preview: true
+			preview: true,
+			copied: false
 		},
 		{
 			component: DragFreeCarousel,
 			name: 'Drag free carousel',
 			description: 'A carousel with drag free option',
 			code: fragFreeCarouselCode,
-			preview: true
+			preview: true,
+			copied: false
 		},
 		{
 			component: AutoPlayCarousel,
@@ -108,21 +115,24 @@
 			description: 'A carousel with auto play option',
 
 			code: autoPlayCarouselCode,
-			preview: true
+			preview: true,
+			copied: false
 		},
 		{
 			component: PartialViewCarousel,
 			name: 'Partial view carousel',
 			description: 'A carousel with partial view option',
 			code: partialViewCarouselCode,
-			preview: true
+			preview: true,
+			copied: false
 		},
 		{
 			component: VerticalCarousel,
 			name: 'Vertical carousel',
 			description: 'A carousel with vertical layout',
 			code: verticalCarouselCode,
-			preview: true
+			preview: true,
+			copied: false
 		}
 	];
 
@@ -181,7 +191,7 @@
 		{/each}
 	</ul>
 	<h2>Examples</h2>
-	{#each examples as { component, name, description, preview, code = "" }}
+	{#each examples as { component, name, description, preview, copied, code = "" }}
 		<div>
 			<h3>{name}</h3>
 			<p>{description}</p>
@@ -208,12 +218,32 @@
 					</div>{/key}
 
 				{#key preview}
-					<div transition:slide={{ duration: 400 }} hidden={preview} class="mockup-code not-prose">
+					<button
+						aria-label="Copy code to clipboard"
+						transition:slide={{ duration: 400 }}
+						hidden={preview}
+						on:click={() => {
+							copied = true;
+							navigator.clipboard.writeText(code);
+							setTimeout(() => {
+								copied = false;
+							}, 1000);
+						}}
+						class="mockup-code w-full text-left not-prose cursor-pointer hover:ring-1 hover:ring-slate-100"
+					>
+						{#if copied}
+							<div
+								transition:scale={{ duration: 200 }}
+								class="absolute top-4 right-4 origin-top-right font-medium text-sm text-slate-400"
+							>
+								Copied to clipboard !
+							</div>
+						{/if}
 						<pre>
 						<code
 								>{@html Prism.highlight(code, Prism.languages.svelte, 'svelte')}
 						</code></pre>
-					</div>
+					</button>
 				{/key}
 			</div>
 		</div>
