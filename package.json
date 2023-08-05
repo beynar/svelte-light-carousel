@@ -1,6 +1,6 @@
 {
    "name": "svelte-light-carousel",
-   "version": "0.0.45",
+   "version": "0.0.47",
    "scripts": {
       "dev": "vite dev",
       "build": "vite build && npm run package",

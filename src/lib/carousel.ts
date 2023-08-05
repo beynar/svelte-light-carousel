@@ -1,4 +1,4 @@
-import { debounce } from './throttle.js';
+import { debounce, throttle } from './throttle.js';
 const getSize = () => {
 	const width = window.innerWidth;
 	if (width < 640) return 'xs';
@@ -328,14 +328,10 @@ export const dragScroll = (
 		}
 	});
 
-	const debouncedScroll = debounce(() => {
+	const debouncedScroll = throttle(() => {
+		console.log('debouncedScroll');
 		currentSlide = getCurrentSlide();
-		if (!dragFree && !isMobile) {
-			scrollTo(currentSlide);
-		} else {
-			emitChange();
-		}
-
+		emitChange();
 		startPlay();
 	}, 100);
 

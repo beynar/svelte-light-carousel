@@ -38,7 +38,7 @@
 		'Enough features to cover most basic (e-commerce) use cases',
 		'100% headless and customizable',
 		'Slots for arrows, pagination, progress bar, and dots, so you can build your own UI',
-		'Rely on CSS native scroll behavior on mobile',
+		'Rely on CSS native scroll behavior on mobile and mouse wheel on desktop',
 		'Accessible',
 		"Preserve trackpad and mouse wheel's native behavior",
 		'Performant, no complicated calculation, rely on RAF for sliding animations',

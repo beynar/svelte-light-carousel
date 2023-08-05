@@ -58,11 +58,3 @@ export function throttle<T extends unknown[]>(
 	};
 	return fn;
 }
-
-export function debounce<T extends unknown[]>(
-	callback: (...args: T) => unknown,
-	wait = 0,
-	{ start = false, middle = false, once = false }: ThrottleOptions = {}
-): Throttler<T> {
-	return throttle(callback, wait, { start, middle, once });
-}
