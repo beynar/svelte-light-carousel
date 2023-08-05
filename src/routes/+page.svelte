@@ -37,18 +37,18 @@
 		'Rely on CSS for layout => no shifting',
 		'Enough features to cover most basic (e-commerce) use cases',
 		'100% headless and customizable',
+		'Slots for arrows, pagination, progress bar, and dots, so you can build your own UI',
 		'Rely on CSS native scroll behavior on mobile',
 		'Accessible',
 		"Preserve trackpad and mouse wheel's native behavior",
 		'Performant, no complicated calculation, rely on RAF for sliding animations',
 		'Can show partial view of the next slide',
 		'Responsive properties: layout, gap, and delta',
-		'Drag free option',
+		'Snapping and drag free option',
 		'Auto play ready',
 		'Vertical layout option (with auto height calculation enabled by default, but can be disabled)',
 		'SSR friendly',
 		'Disable click on child when dragging',
-		'Snapping',
 		"Won't crush your lighthouse score at all"
 	];
 
@@ -90,7 +90,7 @@
 		},
 		{
 			component: CarouselResponsive,
-			name: 'Carousel responsive',
+			name: 'Responsive carousel',
 			description: 'A carousel with responsive layout',
 			code: CarouselResponsiveCode,
 			preview: true
