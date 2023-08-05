@@ -1,6 +1,5 @@
 <script lang="ts">
 	export let title: string;
-	export let subtitle: string;
 
 	const gradients = [
 		'linear-gradient(to bottom right, #FF512F, #DD2476)',
@@ -20,8 +19,7 @@
 </script>
 
 <div class="card w-full min-h-full text-primary-content" style:background={randomGragient}>
-	<div class="card-body">
-		<h2 class="card-title">{title}</h2>
-		<p>{subtitle}</p>
+	<div class="card-body flex items-center justify-center">
+		<h2 class="card-title text-2xl">{title}</h2>
 	</div>
 </div>

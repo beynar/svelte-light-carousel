@@ -33,14 +33,14 @@
 	import { slide } from 'svelte/transition';
 
 	const features = [
-		'Lightweight, no dependencies ',
-		'Rely on CSS for layout (no shifting)',
+		'Lightweight, no dependencies < 2kb of JS and < 3kb of Svelte',
+		'Rely on CSS for layout => no shifting',
 		'Enough features to cover most basic (e-commerce) use cases',
-		'Headless and customizable',
+		'100% headless and customizable',
 		'Rely on CSS native scroll behavior on mobile',
 		'Accessible',
 		"Preserve trackpad and mouse wheel's native behavior",
-		'Performant, no complicated calculation, rely on RAF for animations',
+		'Performant, no complicated calculation, rely on RAF for sliding animations',
 		'Can show partial view of the next slide',
 		'Responsive properties: layout, gap, and delta',
 		'Drag free option',

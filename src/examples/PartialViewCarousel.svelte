@@ -12,6 +12,6 @@
 	import { slides } from './slides.js';
 </script>
 
-<Carousel {slides} layout={{ default: 2 }} partialDelta={{ default: 100 }}>
+<Carousel {slides} layout={{ sm: 1, default: 2 }} partialDelta={{ default: 100 }}>
 	<Slide slot="slide" let:slide {...slide} />
 </Carousel>
