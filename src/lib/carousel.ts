@@ -21,6 +21,7 @@ export type Dot = { active: boolean; a11y: DotA11y };
 interface DragScrollParameters {
 	enabled?: boolean;
 	oneAtTime?: boolean;
+	pauseOnHover?: boolean;
 	dragFree?: boolean;
 	autoPlay?: number;
 	axis?: 'x' | 'y';
@@ -54,6 +55,7 @@ export const dragScroll = (
 		enabled = true,
 		partialDelta,
 		dragFree,
+		pauseOnHover,
 		autoHeight,
 		autoPlay,
 		onInit,
@@ -118,14 +120,16 @@ export const dragScroll = (
 	let slideWidth = (node.firstChild as HTMLElement)?.clientWidth;
 	let slideHeight = (node.firstChild as HTMLElement)?.clientHeight;
 	let currentSlide: number = getCurrentSlide();
-	let autoPlayTimeout: number;
 	let mouseTargetedSlide: HTMLElement | undefined;
+	let autoPlayTimeout: number;
+	let autoPlayPaused: boolean;
 
 	const startPlay = () => {
 		if (autoPlay) {
 			if (autoPlayTimeout) {
 				clearInterval(autoPlayTimeout);
 			}
+
 			autoPlayTimeout = setInterval(() => {
 				if (currentSlide + slidesPerView - 1 < slideCount - 1) {
 					scrollTo(currentSlide + 1);
@@ -133,6 +137,19 @@ export const dragScroll = (
 					scrollTo(0);
 				}
 			}, autoPlay * 1000);
+		}
+	};
+
+	const pauseAutoPlay = () => {
+		if (autoPlayTimeout) {
+			autoPlayPaused = true;
+			clearInterval(autoPlayTimeout);
+		}
+	};
+	const resumePlay = () => {
+		if (autoPlayPaused) {
+			autoPlayPaused = false;
+			startPlay();
 		}
 	};
 
@@ -343,23 +360,29 @@ export const dragScroll = (
 			debouncedScroll();
 		}
 	};
-	const addEvents = () => {
+	const addEvents = ({ autoPlay, pauseOnHover }: { autoPlay?: number; pauseOnHover?: boolean }) => {
 		if (!isMobile) {
 			node.addEventListener('mousedown', handleMouseDown);
+		}
+		if (autoPlay && pauseOnHover) {
+			node.addEventListener('pointerenter', pauseAutoPlay);
+			node.addEventListener('pointerleave', resumePlay);
 		}
 		node.addEventListener('scroll', onScroll);
 	};
 
-	enabled && addEvents();
-
 	const removeEvents = () => node.removeEventListener('mousedown', handleMouseDown);
 
 	init();
-
+	enabled && addEvents({ autoPlay, pauseOnHover });
 	return {
 		update(update: Partial<DragScrollParameters> = {}) {
 			removeEvents();
-			if (update.enabled) addEvents();
+			if (update.enabled)
+				addEvents({
+					autoPlay: update.autoPlay,
+					pauseOnHover: update.pauseOnHover
+				});
 			else removeEvents();
 			init();
 			if (autoPlayTimeout && !autoPlay) {

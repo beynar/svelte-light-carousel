@@ -30,7 +30,6 @@
 	} from '../examples/PartialViewCarousel.svelte';
 	import Prism from 'prismjs';
 	import 'prism-svelte';
-
 	import { scale, slide } from 'svelte/transition';
 
 	let examples = [

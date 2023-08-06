@@ -59,6 +59,7 @@
 	export let oneAtTime: boolean = false;
 	export let autoHeight: boolean = axis === 'y';
 	export let autoPlay: number = 0;
+	export let pauseOnHover: boolean = false;
 	export let layout: ResponsiveProperty = {
 		default: 1
 	};
@@ -127,6 +128,7 @@
 				layout,
 				id,
 				autoHeight,
+				pauseOnHover,
 				partialDelta,
 				onInit,
 				onChange,

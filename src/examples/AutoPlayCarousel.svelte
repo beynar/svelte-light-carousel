@@ -12,6 +12,6 @@
 	import { slides } from './slides.js';
 </script>
 
-<Carousel autoPlay={5} {slides}>
+<Carousel autoPlay={1} {slides}>
 	<Slide slot="slide" let:slide {...slide} />
 </Carousel>
