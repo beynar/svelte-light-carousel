@@ -20,6 +20,8 @@
 
 <div class="card w-full min-h-full text-primary-content" style:background={randomGradient}>
 	<div class="card-body md:py-16 items-center justify-center">
-		<h2 class="card-title text-2xl">{title}</h2>
+		<h2 class="card-title text-2xl">
+			{title}
+		</h2>
 	</div>
 </div>

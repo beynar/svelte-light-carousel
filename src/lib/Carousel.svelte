@@ -252,8 +252,7 @@
 		cursor: grabbing;
 	}
 	[data-carousel-slide] {
-		height: 100%;
-		list-style: none;
+		height: auto;
 	}
 
 	@media (max-width: 640px) {

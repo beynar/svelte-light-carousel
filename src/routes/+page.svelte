@@ -31,6 +31,8 @@
 	import Prism from 'prismjs';
 	import 'prism-svelte';
 	import { scale, slide } from 'svelte/transition';
+	import Carousel from '$lib/Carousel.svelte';
+	import Slide from '../examples/Slide.svelte';
 
 	let examples = [
 		{
@@ -131,6 +133,7 @@
 	class="mx-auto md:px-10 px-4 rounded my-10 max-w-5xl w-full py-10 prose prose-sm md:prose-base prose-invert"
 >
 	<h2 class="scroll-m-20 !text-slate-100" id="intro">Svelte light carousel</h2>
+
 	<div class="mockup-code not-prose">
 		<pre
 			on:pointerdown={copy}
@@ -146,6 +149,15 @@
 			data-prefix="$"><code>yarn add svelte-light-carousel</code></pre>
 	</div>
 	<h2 class="!text-slate-100">Features</h2>
+	<Carousel
+		containerClass="my-10 not-prose"
+		slideClass="!text-white !text-center h-full"
+		slides={features}
+		autoPlay={0}
+		pauseOnHover
+	>
+		<Slide slot="slide" let:slide title={slide} />
+	</Carousel>
 	<ul class="px-0">
 		{#each features as feature}
 			<li class="flex h-fit items-start gap-2 !my-0">
