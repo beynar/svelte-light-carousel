@@ -122,7 +122,7 @@
 
 {#if slides.length > 0}
 	<div aria-roledescription="carousel" {id} class={containerClass} data-carousel-container>
-		<ul
+		<div
 			class={$$props.class}
 			data-carousel-slider
 			data-carousel-with-grab-cursor={withGrabCursor}
@@ -189,18 +189,18 @@
 			id={`${id}-slides`}
 		>
 			{#each slides as slide, index (key ? slide[key] : index)}
-				<li
+				<div
 					id={`${id}-slide-${index + 1}`}
 					aria-label={`Slide ${index + 1} of ${slides.length} `}
 					aria-roledescription="slide"
-					role="group"
+					role="tabpanel"
 					class={slideClass}
 					data-carousel-slide={index}
 				>
 					<slot name="slide" inView={slidesInView.includes(index)} {index} {slide} />
-				</li>
+				</div>
 			{/each}
-		</ul>
+		</div>
 
 		<slot name="progress" scrollTo={scrollProgress} {progress} />
 		<slot
