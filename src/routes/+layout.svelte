@@ -36,6 +36,7 @@
 	<a
 		class="btn btn-ghost normal-case inline-flex"
 		href="https://github.com/beynar/svelte-light-carousel"
+		title="github"
 	>
 		<svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 fill-slate-400"
 			><path
