@@ -102,7 +102,9 @@ export const dragScroll = (
 		if (mouseTargetedSlide) {
 			mouseTargetedSlide.style.pointerEvents = 'auto';
 		}
-		startPlay();
+		if (!autoPlayPaused) {
+			startPlay();
+		}
 	};
 	const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 		navigator.userAgent
@@ -129,7 +131,6 @@ export const dragScroll = (
 			if (autoPlayTimeout) {
 				clearInterval(autoPlayTimeout);
 			}
-
 			autoPlayTimeout = setInterval(() => {
 				if (currentSlide + slidesPerView - 1 < slideCount - 1) {
 					scrollTo(currentSlide + 1);
