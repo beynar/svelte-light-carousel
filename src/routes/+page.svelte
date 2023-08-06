@@ -182,7 +182,7 @@
 		{/each}
 	</ul>
 	<h2 id="examples" class="scroll-m-20 !text-slate-100">Examples</h2>
-	{#each examples as { component, name, description, preview, copied, code = "" }}
+	{#each examples as { component, name, description, preview, copied, code = "" } (name)}
 		<div>
 			<h3>{name}</h3>
 			<p>{description}</p>
@@ -206,14 +206,14 @@
 			</div>
 			<div class="py-4">
 				{#key preview}
-					<div transition:slide={{ duration: 400 }} hidden={!preview} class="not-prose">
+					<div hidden={!preview} class="not-prose">
 						<svelte:component this={component} />
-					</div>{/key}
+					</div>
+				{/key}
 
 				{#key preview}
 					<button
 						aria-label="Copy code to clipboard"
-						transition:slide={{ duration: 400 }}
 						hidden={preview}
 						on:click={() => {
 							copied = true;
