@@ -213,7 +213,7 @@ export const slots = [
 	},
 	{
 		name: 'prev',
-		description: 'Render the prev button.',
+		description: 'Render the previous button.',
 		props: prevArray
 	},
 	{
@@ -223,18 +223,17 @@ export const slots = [
 	},
 	{
 		name: 'pagination',
-		description:
-			'Render the pagination. Usefull if you do not want to group prev and next together.',
+		description: 'Render the pagination. Useful if you want to group prev and next together.',
 		props: paginationArray
 	},
 	{
 		name: 'progress',
-		description: 'Render the progress bar.',
+		description: 'Render the progress bar indicator.',
 		props: progressArray
 	},
 	{
 		name: 'dots',
-		description: 'Render the dots.',
+		description: 'Render the dots navigation.',
 		props: dotsArray
 	}
 ];

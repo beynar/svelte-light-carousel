@@ -131,7 +131,7 @@
 <div
 	class="mx-auto md:px-10 px-4 rounded my-10 max-w-5xl w-full py-10 prose prose-sm md:prose-base"
 >
-	<h2>Svelte light carousel</h2>
+	<h2 class="scroll-m-20" id="intro">Svelte light carousel</h2>
 	<div class="mockup-code not-prose">
 		<pre
 			on:pointerdown={copy}
