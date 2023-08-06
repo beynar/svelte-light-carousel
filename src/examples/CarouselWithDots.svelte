@@ -5,9 +5,11 @@
 		<div
 			slot="dots"
 			let:dots
+			let:a11y
 			let:scrollTo
 			data-progress
 			class="absolute left-1/4 -bottom-10 w-1/2 gap-2 justify-center flex items-center z-10"
+			{...a11y}
 		>
 			{#each dots as { a11y }, i}
 				<button
@@ -32,9 +34,11 @@
 	<div
 		slot="dots"
 		let:dots
+		let:a11y
 		let:scrollTo
 		data-progress
 		class="absolute left-1/4 -bottom-10 w-1/2 gap-2 justify-center flex items-center z-10"
+		{...a11y}
 	>
 		{#each dots as { a11y }, i}
 			<button

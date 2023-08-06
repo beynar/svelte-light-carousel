@@ -6,6 +6,10 @@
 			'aria-label': string;
 		};
 	};
+	type DotsA11y = {
+		role: string;
+		'aria-label': string;
+	};
 	type $$Slots = {
 		slide: {
 			slide: Slide;
@@ -34,6 +38,7 @@
 		};
 		dots: {
 			dots: Dot[];
+			a11y: DotsA11y;
 			scrollTo: typeof scrollDot;
 		};
 	};
@@ -198,7 +203,15 @@
 		</ul>
 
 		<slot name="progress" scrollTo={scrollProgress} {progress} />
-		<slot name="dots" scrollTo={scrollDot} {dots} />
+		<slot
+			name="dots"
+			a11y={{
+				'aria-label': 'Slides',
+				role: 'tablist'
+			}}
+			scrollTo={scrollDot}
+			{dots}
+		/>
 		<slot
 			name="pagination"
 			{next}
