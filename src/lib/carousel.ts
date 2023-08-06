@@ -6,9 +6,18 @@ const getSize = () => {
 	if (width < 1280) return 'lg';
 	return 'xl';
 };
+
 export type Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'default';
 export type ResponsiveProperty<T = number> = Partial<Record<Sizes, T>>;
-
+export type DotA11y = {
+	'aria-controls': string;
+	'aria-label': string;
+	role: 'tab';
+	id: string;
+	'aria-selected': boolean;
+	tabIndex?: number;
+};
+export type Dot = { active: boolean; a11y: DotA11y };
 interface DragScrollParameters {
 	enabled?: boolean;
 	oneAtTime?: boolean;
@@ -19,6 +28,7 @@ interface DragScrollParameters {
 	onInit: (event: OnInitEvent) => void;
 	partialDelta?: { [S in Sizes]?: number };
 	autoHeight?: boolean;
+	id: string;
 	onChange: (event: OnChangeEvent) => void;
 }
 
@@ -29,7 +39,7 @@ export type OnChangeEvent = {
 	currentSlide: number;
 	progress: number;
 	slidesInView: number[];
-	dots: boolean[];
+	dots: Dot[];
 	canScrollNext: boolean;
 	canScrollPrev: boolean;
 };
@@ -37,6 +47,7 @@ export type OnChangeEvent = {
 export const dragScroll = (
 	node: HTMLElement,
 	{
+		id,
 		oneAtTime = false,
 		layout,
 		axis = 'x',
@@ -71,7 +82,17 @@ export const dragScroll = (
 			canScrollPrev: currentSlide > 0,
 			currentSlide,
 			progress: (node.scrollLeft / (node.scrollWidth - node.clientWidth)) * 100,
-			dots: Array.from({ length: slideCount - (slidesPerView - 1) }, (_, i) => i === currentSlide),
+			dots: Array.from({ length: slideCount - (slidesPerView - 1) }, (_, index) => ({
+				active: index === currentSlide,
+				a11y: {
+					'aria-controls': `${id}-slide-${index + 1}`,
+					'aria-label': `Slide ${index + 1}`,
+					'aria-selected': index === currentSlide,
+					id: `${id}-tab-${index + 1}`,
+					role: 'tab',
+					tabIndex: index === currentSlide ? undefined : -1
+				}
+			})),
 			slidesInView: Array.from({ length: slideCount }, (_, i) => i).filter(
 				(slide) => slide >= currentSlide && slide < currentSlide + slidesPerView
 			)

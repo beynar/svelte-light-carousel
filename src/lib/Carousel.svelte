@@ -33,16 +33,18 @@
 			scrollTo: typeof scrollProgress;
 		};
 		dots: {
-			dots: boolean[];
+			dots: Dot[];
 			scrollTo: typeof scrollDot;
 		};
 	};
 
 	import {
 		dragScroll,
+		type DotA11y,
 		type OnChangeEvent,
 		type OnInitEvent,
-		type ResponsiveProperty
+		type ResponsiveProperty,
+		type Dot
 	} from './carousel.js';
 
 	export let id = 'carousel' + Math.random().toString(36).substring(2, 9);
@@ -70,7 +72,7 @@
 	export let slideClass: string = '';
 
 	let slidesInView: number[] = [];
-	let dots: boolean[] = [];
+	let dots: Dot[] = [];
 	let canScrollNext = false;
 	let canScrollPrev = false;
 	let progress: number = 0;
@@ -113,7 +115,7 @@
 </script>
 
 {#if slides.length > 0}
-	<div {id} class={containerClass} data-carousel-container>
+	<div aria-roledescription="carousel" {id} class={containerClass} data-carousel-container>
 		<ul
 			class={$$props.class}
 			data-carousel-slider
@@ -123,6 +125,7 @@
 			data-drag-free={dragFree}
 			use:dragScroll={{
 				layout,
+				id,
 				autoHeight,
 				partialDelta,
 				onInit,
@@ -180,7 +183,8 @@
 		>
 			{#each slides as slide, index (key ? slide[key] : index)}
 				<li
-					aria-label={`${index + 1} of ${slides.length} `}
+					id={`${id}-slide-${index + 1}`}
+					aria-label={`Slide ${index + 1} of ${slides.length} `}
 					aria-roledescription="slide"
 					role="group"
 					class={slideClass}

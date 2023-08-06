@@ -197,7 +197,7 @@ const progressArray = [
 const dotsArray = [
 	{
 		name: 'dots',
-		type: 'boolean[]'
+		type: '{active: boolean, a11y: DotA11y}[]'
 	},
 	{
 		name: 'scrollTo',

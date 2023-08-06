@@ -36,11 +36,11 @@
 		data-progress
 		class={`absolute left-1/4 -bottom-10 w-1/2 gap-2 justify-center flex items-center z-10`}
 	>
-		{#each dots as active, i}
+		{#each dots as { a11y }, i}
 			<button
-				data-active={active}
+				{...a11y}
 				on:click={() => scrollTo(i)}
-				class={`rounded-full cursor-pointer data-[active="true"]:scale-125 transition-all w-4 h-4 data-[active="true"]:bg-slate-100 bg-slate-500 `}
+				class={`rounded-full cursor-pointer aria-[selected="true"]:scale-125 transition-all w-4 h-4  aria-[selected="true"]:bg-slate-100 bg-slate-500 `}
 			/>
 		{/each}
 	</div>

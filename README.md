@@ -79,7 +79,7 @@ Render the slide inside the carousel.
 | index | boolean |
 <!-- END:slide -->
 ### prev
-Render the prev button.
+Render the previous button.
 <!-- START:prev -->
 | Name | Type |
 | ---- | ---- |
@@ -95,7 +95,7 @@ Render the next button.
 | next | () => void |
 <!-- END:next -->
 ### pagination
-Render the pagination. Usefull if you do not want to group prev and next together.
+Render the pagination. Useful if you want to group prev and next together.
 <!-- START:pagination -->
 | Name | Type |
 | ---- | ---- |
@@ -107,7 +107,7 @@ Render the pagination. Usefull if you do not want to group prev and next togethe
 | prevA11y | ButtonsA11y['a11y'] |
 <!-- END:pagination -->
 ### progress
-Render the progress bar.
+Render the progress bar indicator.
 <!-- START:progress -->
 | Name | Type |
 | ---- | ---- |
@@ -115,11 +115,11 @@ Render the progress bar.
 | scrollTo | (e: PointerEvent) => void |
 <!-- END:progress -->
 ### dots
-Render the dots.
+Render the dots navigation.
 <!-- START:dots -->
 | Name | Type |
 | ---- | ---- |
-| dots | boolean[] |
+| dots | {active: boolean, a11y: DotA11y}[] |
 | scrollTo | (index: number) => void |
 <!-- END:dots -->
 <!-- END:SLOTS -->
