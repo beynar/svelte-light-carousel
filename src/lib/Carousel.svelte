@@ -142,46 +142,46 @@
 				autoPlay,
 				axis
 			}}
-			style:--padding-xs={`${axis === 'x' ? '0 ' : ''}${gap.xs || gap.default || 20}px ${
+			style:--padding-xs={`${axis === 'x' ? '0 ' : ''}${gap.xs ?? gap.default ?? 20}px ${
 				axis === 'x' ? '' : '0'
 			}`}
-			style:--padding-sm={`${axis === 'x' ? '0 ' : ''}${gap.sm || gap.default || 20}px ${
+			style:--padding-sm={`${axis === 'x' ? '0 ' : ''}${gap.sm ?? gap.default ?? 20}px ${
 				axis === 'x' ? '' : '0'
 			}`}
-			style:--padding-md={`${axis === 'x' ? '0 ' : ''}${gap.md || gap.default || 20}px ${
+			style:--padding-md={`${axis === 'x' ? '0 ' : ''}${gap.md ?? gap.default ?? 20}px ${
 				axis === 'x' ? '' : '0'
 			}`}
-			style:--padding-lg={`${axis === 'x' ? '0 ' : ''}${gap.lg || gap.default || 20}px ${
+			style:--padding-lg={`${axis === 'x' ? '0 ' : ''}${gap.lg ?? gap.default ?? 20}px ${
 				axis === 'x' ? '' : '0'
 			}`}
-			style:--padding-xl={`${axis === 'x' ? '0 ' : ''}${gap.xl || gap.default || 20}px ${
+			style:--padding-xl={`${axis === 'x' ? '0 ' : ''}${gap.xl ?? gap.default ?? 20}px ${
 				axis === 'x' ? '' : '0'
 			}`}
 			style:--overflow-xs={axis === 'x'
 				? `${disableNativeScroll.xs ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
-				: `visible ${disableNativeScroll.xs || disableNativeScroll.default ? 'hidden' : 'auto'}`}
+				: `visible ${disableNativeScroll.xs ?? disableNativeScroll.default ? 'hidden' : 'auto'}`}
 			style:--overflow-sm={axis === 'x'
 				? `${disableNativeScroll.sm ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
-				: `visible ${disableNativeScroll.sm || disableNativeScroll.default ? 'hidden' : 'auto'}`}
+				: `visible ${disableNativeScroll.sm ?? disableNativeScroll.default ? 'hidden' : 'auto'}`}
 			style:--overflow-md={axis === 'x'
 				? `${disableNativeScroll.md ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
-				: `visible ${disableNativeScroll.md || disableNativeScroll.default ? 'hidden' : 'auto'}`}
+				: `visible ${disableNativeScroll.md ?? disableNativeScroll.default ? 'hidden' : 'auto'}`}
 			style:--overflow-lg={axis === 'x'
 				? `${disableNativeScroll.lg ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
-				: `visible ${disableNativeScroll.lg || disableNativeScroll.default ? 'hidden' : 'auto'}`}
+				: `visible ${disableNativeScroll.lg ?? disableNativeScroll.default ? 'hidden' : 'auto'}`}
 			style:--overflow-xl={axis === 'x'
 				? `${disableNativeScroll.xl ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
-				: `visible ${disableNativeScroll.xl || disableNativeScroll.default ? 'hidden' : 'auto'}`}
-			style:--layout-xs={`${100 / (layout.xs || layout.default || 1)}%`}
-			style:--layout-sm={`${100 / (layout.sm || layout.default || 2)}%`}
-			style:--layout-md={`${100 / (layout.md || layout.default || 2)}%`}
-			style:--layout-lg={`${100 / (layout.lg || layout.default || 3)}%`}
-			style:--layout-xl={`${100 / (layout.xl || layout.default || 4)}%`}
-			style:--partial-delta-xs={`${partialDelta.xs || partialDelta.default || 0}px`}
-			style:--partial-delta-sm={`${partialDelta.sm || partialDelta.default || 0}px`}
-			style:--partial-delta-md={`${partialDelta.md || partialDelta.default || 0}px`}
-			style:--partial-delta-lg={`${partialDelta.lg || partialDelta.default || 0}px`}
-			style:--partial-delta-xl={`${partialDelta.xl || partialDelta.default || 0}px`}
+				: `visible ${disableNativeScroll.xl ?? disableNativeScroll.default ? 'hidden' : 'auto'}`}
+			style:--layout-xs={`${100 / (layout.xs ?? layout.default ?? 1)}%`}
+			style:--layout-sm={`${100 / (layout.sm ?? layout.default ?? 2)}%`}
+			style:--layout-md={`${100 / (layout.md ?? layout.default ?? 2)}%`}
+			style:--layout-lg={`${100 / (layout.lg ?? layout.default ?? 3)}%`}
+			style:--layout-xl={`${100 / (layout.xl ?? layout.default ?? 4)}%`}
+			style:--partial-delta-xs={`${partialDelta.xs ?? partialDelta.default ?? 0}px`}
+			style:--partial-delta-sm={`${partialDelta.sm ?? partialDelta.default ?? 0}px`}
+			style:--partial-delta-md={`${partialDelta.md ?? partialDelta.default ?? 0}px`}
+			style:--partial-delta-lg={`${partialDelta.lg ?? partialDelta.default ?? 0}px`}
+			style:--partial-delta-xl={`${partialDelta.xl ?? partialDelta.default ?? 0}px`}
 			style:--flex-direction={axis === 'x' ? 'row' : 'column'}
 			style:--display={axis === 'x' ? 'flex' : 'grid'}
 			style:--snap-type={axis === 'x' ? 'x mandatory' : 'y mandatory'}
