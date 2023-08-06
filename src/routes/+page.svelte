@@ -127,10 +127,31 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Svelte light carousel</title>
+	<meta name="description" content="A lightweight carousel component for Svelte" />
+	<meta name="keywords" content="svelte, carousel, light, lightweight, component" />
+	<meta name="author" content="Beynar" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#1e1e1e" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="https://svelte-light-carousel.vercel.app" />
+	<meta name="twitter:creator" content="@_beynar" />
+	<meta name="twitter:title" content="Svelte light carousel" />
+	<meta name="twitter:description" content="A lightweight carousel component for Svelte" />
+	<meta name="twitter:image" content="https://svelte-light-carousel.vercel.app/og.png" />
+	<meta property="og:title" content="Svelte light carousel" />
+	<meta property="og:description" content="A lightweight carousel component for Svelte" />
+	<meta property="og:image" content="https://svelte-light-carousel.vercel.app/og.png" />
+	<meta property="og:url" content="https://svelte-light-carousel.vercel.app" />
+	<meta property="og:site_name" content="Svelte light carousel" />
+	<meta property="og:type" content="website" />
+	<link rel="icon" href="/favicon.ico" />
+</svelte:head>
 <div
 	class="mx-auto md:px-10 px-4 rounded my-10 max-w-5xl w-full py-10 prose prose-sm md:prose-base prose-invert"
 >
-	<h2 class="scroll-m-20" id="intro">Svelte light carousel</h2>
+	<h2 class="scroll-m-20 !text-slate-100" id="intro">Svelte light carousel</h2>
 	<div class="mockup-code not-prose">
 		<pre
 			on:pointerdown={copy}
@@ -145,7 +166,7 @@
 			class="hover:bg-slate-100 md:mx-10 cursor-pointer w-fit rounded"
 			data-prefix="$"><code>yarn add svelte-light-carousel</code></pre>
 	</div>
-	<h2>Features</h2>
+	<h2 class="!text-slate-100">Features</h2>
 	<ul class="px-0">
 		{#each features as feature}
 			<li class="flex h-fit items-start gap-2 !my-0">
@@ -169,7 +190,7 @@
 			</li>
 		{/each}
 	</ul>
-	<h2 id="examples" class="scroll-m-20">Examples</h2>
+	<h2 id="examples" class="scroll-m-20 !text-slate-100">Examples</h2>
 	{#each examples as { component, name, description, preview, copied, code = "" }}
 		<div>
 			<h3>{name}</h3>
@@ -230,7 +251,7 @@
 		</div>
 	{/each}
 
-	<h2 id="props" class="scroll-m-20">Props</h2>
+	<h2 id="props" class="scroll-m-20 !text-slate-100">Props</h2>
 	<div class="overflow-x-auto not-prose">
 		<table class="table table-zebra table-sm rounded">
 			{#each Object.keys(props[0]) as prop}
@@ -271,7 +292,7 @@
 			{/each}
 		</table>
 	</div>
-	<h2 id="slots" class="scroll-m-20">Slots</h2>
+	<h2 id="slots" class="scroll-m-20 !text-slate-100">Slots</h2>
 	{#each slots as { name, description, props }}
 		<h3>{name}</h3>
 		<p>{description}</p>
