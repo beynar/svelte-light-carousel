@@ -14,10 +14,10 @@
 	<meta name="twitter:creator" content="@_beynar" />
 	<meta name="twitter:title" content="Svelte light carousel" />
 	<meta name="twitter:description" content="A lightweight carousel component for Svelte" />
-	<meta name="twitter:image" content="https://svelte-light-carousel.vercel.app/og.png" />
+	<meta name="twitter:image" content="https://svelte-light-carousel.vercel.app/og.jpg" />
 	<meta property="og:title" content="Svelte light carousel" />
 	<meta property="og:description" content="A lightweight carousel component for Svelte" />
-	<meta property="og:image" content="https://svelte-light-carousel.vercel.app/og.png" />
+	<meta property="og:image" content="https://svelte-light-carousel.vercel.app/og.jpg" />
 	<meta property="og:url" content="https://svelte-light-carousel.vercel.app" />
 	<meta property="og:site_name" content="Svelte light carousel" />
 	<meta property="og:type" content="website" />
