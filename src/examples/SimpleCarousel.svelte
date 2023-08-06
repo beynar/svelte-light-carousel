@@ -11,13 +11,6 @@
 	import { slides } from './slides.js';
 </script>
 
-<Carousel
-	disableNativeScroll={{
-		xs: false,
-		sm: false,
-		default: false
-	}}
-	{slides}
->
+<Carousel {slides}>
 	<Slide slot="slide" let:slide {...slide} />
 </Carousel>
