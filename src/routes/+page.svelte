@@ -128,7 +128,7 @@
 </script>
 
 <div
-	class="mx-auto md:px-10 px-4 rounded my-10 max-w-5xl w-full py-10 prose prose-sm md:prose-base"
+	class="mx-auto md:px-10 px-4 rounded my-10 max-w-5xl w-full py-10 prose prose-sm md:prose-base prose-invert"
 >
 	<h2 class="scroll-m-20" id="intro">Svelte light carousel</h2>
 	<div class="mockup-code not-prose">
@@ -180,14 +180,16 @@
 						preview = true;
 					}}
 					class:tab-active={preview}
-					class="tab tab-lifted">Preview</button
+					class:text-slate-100={preview}
+					class="tab tab-lifted text-slate-400">Preview</button
 				>
 				<button
 					on:click={() => {
 						preview = false;
 					}}
 					class:tab-active={!preview}
-					class="tab tab-lifted">Code</button
+					class:text-slate-100={!preview}
+					class="tab tab-lifted text-slate-400">Code</button
 				>
 			</div>
 			<div class="py-4">
