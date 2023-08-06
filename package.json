@@ -1,76 +1,76 @@
 {
-   "name": "svelte-light-carousel",
-   "version": "0.0.102",
-   "scripts": {
-      "dev": "vite dev",
-      "build": "vite build && npm run package",
-      "preview": "vite preview",
-      "package": "svelte-kit sync && svelte-package && node prepare.js",
-      "prepublishOnly": "npm run package",
-      "pub": "pnpm package && npm publish --access public",
-      "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-      "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-      "lint": "prettier --plugin-search-dir . --check . && eslint .",
-      "format": "prettier --plugin-search-dir . --write ."
-   },
-   "exports": {
-      "./package.json": "./package.json",
-      ".": {
-         "default": "./dist/Carousel.svelte",
-         "svelte": "./dist/Carousel.svelte",
-         "types": "./dist/Carousel.svelte.d.ts"
-      },
-      "./types": {
-         "default": "./dist/carousel.d.ts",
-         "svelte": "./dist/carousel.d.ts",
-         "types": "./dist/carousel.d.ts"
-      }
-   },
-   "typesVersions": {
-      "*": {
-         ".": [
-            "./dist/Carousel.svelte.d.ts",
-            "./dist/carousel.d.ts"
-         ]
-      }
-   },
-   "svelte": "./dist/Carousel.svelte",
-   "types": "./dist/Carousel.svelte.d.ts",
-   "files": [
-      "dist",
-      "!dist/**/*.test.*",
-      "!dist/**/*.spec.*"
-   ],
-   "peerDependencies": {
-      "svelte": "^4.0.0"
-   },
-   "devDependencies": {
-      "@sveltejs/adapter-auto": "^2.0.0",
-      "@sveltejs/kit": "^1.20.4",
-      "@sveltejs/package": "^2.0.0",
-      "@tailwindcss/typography": "^0.5.9",
-      "@typescript-eslint/eslint-plugin": "^5.45.0",
-      "@typescript-eslint/parser": "^5.45.0",
-      "autoprefixer": "^10.4.14",
-      "daisyui": "^3.5.1",
-      "esbuild": "^0.18.17",
-      "eslint": "^8.28.0",
-      "eslint-config-prettier": "^8.5.0",
-      "eslint-plugin-svelte": "^2.30.0",
-      "node-dir": "^0.1.17",
-      "postcss": "^8.4.27",
-      "prettier": "^2.8.0",
-      "prettier-plugin-svelte": "^2.10.1",
-      "prism-svelte": "^0.5.0",
-      "prismjs": "^1.29.0",
-      "publint": "^0.1.9",
-      "semver": "^7.5.4",
-      "svelte": "^4.0.5",
-      "svelte-check": "^3.4.3",
-      "tailwindcss": "^3.3.3",
-      "tslib": "^2.4.1",
-      "typescript": "^5.0.0",
-      "vite": "^4.4.2"
-   },
-   "type": "module"
+	"name": "svelte-light-carousel",
+	"version": "0.0.102",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build && npm run package",
+		"preview": "vite preview",
+		"package": "svelte-kit sync && svelte-package && node prepare.js",
+		"prepublishOnly": "npm run package",
+		"pub": "pnpm package && npm publish --access public",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"format": "prettier --plugin-search-dir . --write ."
+	},
+	"exports": {
+		"./package.json": "./package.json",
+		".": {
+			"default": "./dist/Carousel.svelte",
+			"svelte": "./dist/Carousel.svelte",
+			"types": "./dist/Carousel.svelte.d.ts"
+		},
+		"./types": {
+			"default": "./dist/carousel.d.ts",
+			"svelte": "./dist/carousel.d.ts",
+			"types": "./dist/carousel.d.ts"
+		}
+	},
+	"typesVersions": {
+		"*": {
+			".": [
+				"./dist/Carousel.svelte.d.ts",
+				"./dist/carousel.d.ts"
+			]
+		}
+	},
+	"svelte": "./dist/Carousel.svelte",
+	"types": "./dist/Carousel.svelte.d.ts",
+	"files": [
+		"dist",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*"
+	],
+	"peerDependencies": {
+		"svelte": "^4.0.0"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/kit": "^1.20.4",
+		"@sveltejs/package": "^2.0.0",
+		"@tailwindcss/typography": "^0.5.9",
+		"@typescript-eslint/eslint-plugin": "^5.45.0",
+		"@typescript-eslint/parser": "^5.45.0",
+		"autoprefixer": "^10.4.14",
+		"daisyui": "^3.5.1",
+		"esbuild": "^0.18.17",
+		"eslint": "^8.28.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-svelte": "^2.30.0",
+		"node-dir": "^0.1.17",
+		"postcss": "^8.4.27",
+		"prettier": "^2.8.0",
+		"prettier-plugin-svelte": "^2.10.1",
+		"prism-svelte": "^0.5.0",
+		"prismjs": "^1.29.0",
+		"publint": "^0.1.9",
+		"semver": "^7.5.4",
+		"svelte": "^4.0.5",
+		"svelte-check": "^3.4.3",
+		"tailwindcss": "^3.3.3",
+		"tslib": "^2.4.1",
+		"typescript": "^5.0.0",
+		"vite": "^4.4.2"
+	},
+	"type": "module"
 }

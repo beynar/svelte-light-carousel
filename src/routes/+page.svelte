@@ -170,7 +170,7 @@
 			</li>
 		{/each}
 	</ul>
-	<h2>Examples</h2>
+	<h2 id="examples" class="scroll-m-20">Examples</h2>
 	{#each examples as { component, name, description, preview, copied, code = "" }}
 		<div>
 			<h3>{name}</h3>
@@ -229,7 +229,7 @@
 		</div>
 	{/each}
 
-	<h2>Props</h2>
+	<h2 id="props" class="scroll-m-20">Props</h2>
 	<div class="overflow-x-auto not-prose">
 		<table class="table table-zebra table-sm rounded">
 			{#each Object.keys(props[0]) as prop}
@@ -270,7 +270,7 @@
 			{/each}
 		</table>
 	</div>
-	<h2>Slots</h2>
+	<h2 id="slots" class="scroll-m-20">Slots</h2>
 	{#each slots as { name, description, props }}
 		<h3>{name}</h3>
 		<p>{description}</p>
