@@ -212,11 +212,6 @@ export const slots = [
 		props: slideArray
 	},
 	{
-		name: 'pagination',
-		description: 'Render the pagination.',
-		props: paginationArray
-	},
-	{
 		name: 'prev',
 		description: 'Render the prev button.',
 		props: prevArray

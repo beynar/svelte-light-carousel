@@ -78,18 +78,6 @@ Render the slide inside the carousel.
 | inView | boolean |
 | index | boolean |
 <!-- END:slide -->
-### pagination
-Render the pagination.
-<!-- START:pagination -->
-| Name | Type |
-| ---- | ---- |
-| canScrollPrev | boolean |
-| prev | typeof prev |
-| canScrollNext | boolean |
-| next | typeof next |
-| nextA11y | ButtonsA11y['a11y'] |
-| prevA11y | ButtonsA11y['a11y'] |
-<!-- END:pagination -->
 ### prev
 Render the prev button.
 <!-- START:prev -->
@@ -109,6 +97,14 @@ Render the next button.
 ### pagination
 Render the pagination. Usefull if you do not want to group prev and next together.
 <!-- START:pagination -->
+| Name | Type |
+| ---- | ---- |
+| canScrollPrev | boolean |
+| prev | typeof prev |
+| canScrollNext | boolean |
+| next | typeof next |
+| nextA11y | ButtonsA11y['a11y'] |
+| prevA11y | ButtonsA11y['a11y'] |
 <!-- END:pagination -->
 ### progress
 Render the progress bar.
