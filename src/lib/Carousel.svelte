@@ -10,6 +10,7 @@
 		slide: {
 			slide: Slide;
 			inView: boolean;
+			index: number;
 		};
 		pagination: {
 			canScrollPrev: boolean;
@@ -45,7 +46,7 @@
 	} from './carousel.js';
 
 	export let id = 'carousel' + Math.random().toString(36).substring(2, 9);
-	export let slides: Slide[];
+	export let slides: Slide[] = [];
 	export let withGrabCursor: boolean = true;
 	export let key: keyof Slide | undefined = undefined;
 	export let axis: 'x' | 'y' = 'x';
@@ -59,7 +60,7 @@
 	export let layout: ResponsiveProperty = {
 		default: 1
 	};
-	export let gaps: ResponsiveProperty = {
+	export let gap: ResponsiveProperty = {
 		default: 20
 	};
 	export let partialDelta: ResponsiveProperty = {
@@ -83,7 +84,6 @@
 
 	const onInit = (event: OnInitEvent) => {
 		scrollTo = event.scrollTo;
-		console.log('on init');
 		mounted = true;
 	};
 
@@ -132,19 +132,19 @@
 				autoPlay,
 				axis
 			}}
-			style:--padding-xs={`${axis === 'x' ? '0 ' : ''}${gaps.xs || gaps.default || 0}px ${
+			style:--padding-xs={`${axis === 'x' ? '0 ' : ''}${gap.xs || gap.default || 20}px ${
 				axis === 'x' ? '' : '0'
 			}`}
-			style:--padding-sm={`${axis === 'x' ? '0 ' : ''}${gaps.sm || gaps.default || 0}px ${
+			style:--padding-sm={`${axis === 'x' ? '0 ' : ''}${gap.sm || gap.default || 20}px ${
 				axis === 'x' ? '' : '0'
 			}`}
-			style:--padding-md={`${axis === 'x' ? '0 ' : ''}${gaps.md || gaps.default || 0}px ${
+			style:--padding-md={`${axis === 'x' ? '0 ' : ''}${gap.md || gap.default || 20}px ${
 				axis === 'x' ? '' : '0'
 			}`}
-			style:--padding-lg={`${axis === 'x' ? '0 ' : ''}${gaps.lg || gaps.default || 0}px ${
+			style:--padding-lg={`${axis === 'x' ? '0 ' : ''}${gap.lg || gap.default || 20}px ${
 				axis === 'x' ? '' : '0'
 			}`}
-			style:--padding-xl={`${axis === 'x' ? '0 ' : ''}${gaps.xl || gaps.default || 0}px ${
+			style:--padding-xl={`${axis === 'x' ? '0 ' : ''}${gap.xl || gap.default || 20}px ${
 				axis === 'x' ? '' : '0'
 			}`}
 			style:--overflow-xs={axis === 'x'
@@ -178,15 +178,15 @@
 			style:transform={autoHeight ? 'scaleY(0%)' : ''}
 			id={`${id}-slides`}
 		>
-			{#each slides as slide, i (key ? slide[key] : i)}
+			{#each slides as slide, index (key ? slide[key] : index)}
 				<li
-					aria-label={`${i + 1} of ${slides.length} `}
+					aria-label={`${index + 1} of ${slides.length} `}
 					aria-roledescription="slide"
 					role="group"
 					class={slideClass}
-					data-carousel-slide={i}
+					data-carousel-slide={index}
 				>
-					<slot name="slide" inView={slidesInView.includes(i)} {slide} />
+					<slot name="slide" inView={slidesInView.includes(index)} {index} {slide} />
 				</li>
 			{/each}
 		</ul>

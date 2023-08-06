@@ -1,58 +1,129 @@
-# create-svelte
+# Svelte light carousel
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
-
-Read more about creating a library [in the docs](https://kit.svelte.dev/docs/packaging).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+A lightweight carousel component for Svelte focused on low runtime and minimalism.
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+npm i svelte-light-carousel
+pnpm add svelte-light-carousel
+yarn add svelte-light-carousel
 ```
 
-## Developing
+## Usage
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+```svelte
+<script>
+	import Carousel from 'svelte-light-carousel';
+	const slides = Array.from({ length: 10 }, (_, i) => ({ title: `${i + 1}` }));
+</script>
 
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+<Carousel {slides}>
+	<div slot="slide" let:slide>{slide.title}</div>
+</Carousel>
 ```
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+## Features
 
-## Building
+<!-- START:FEATURES -->
+- Lightweight, no dependencies ≈ 1.5kb of JS and < 3kb of Svelte
+- Rely on CSS for layout => no shifting
+- Enough features to cover most basic (e-commerce) use cases
+- 100% headless and customizable
+- Slots for arrows, pagination, progress bar, and dots, so you can build your own UI
+- Rely on CSS native scroll behavior on mobile and mouse wheel on desktop
+- Accessible
+- Preserve trackpad and mouse wheel's native behavior
+- Performant, no complicated calculation, rely on RAF for sliding animations
+- Can show partial view of the next slide
+- Responsive properties: layout, gap, delta and native scroll disabling
+- Snapping and drag free option
+- Auto play option
+- Vertical layout option (with auto height calculation enabled by default, but can be disabled)
+- SSR friendly
+- Disable click on child when dragging
+- Won't crush your lighthouse score at all
+<!-- END:FEATURES -->
 
-To build your library:
+## Props
 
-```bash
-npm run package
-```
+<!-- START:PROPS -->
+| Name | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| id | string | random | The base id for the carousel and its accessible properties. |
+| slides | $$Generic[] | [] | The slides to be rendered. |
+| withGrabCursor | boolean | true | Whether the cursor should change to a grab cursor when hovering over the carousel. |
+| key | keyof Slide | undefined | Property of the slide to use as a key in the eached block. |
+| axis | "x" | "y" | x | The axis of the carousel. |
+| dragFree | boolean | false | Whether the carousel should be able to be dragged freely. |
+| disableNativeScroll | ResponsiveProperty<boolean> | false | Whether the native scroll should be disabled. |
+| oneAtTime | boolean | false | Whether only one slide should be scrolled at a time. |
+| autoHeight | boolean | axis === "y" | Whether the carousel should compute its height itself. This introduce a layout shift when the carousel is loaded. |
+| autoPlay | number | 0 | The number of seconds between each slide. 0 means it's disabled. |
+| layout | ResponsiveProperty<number> | 1 | The number of slides to be displayed at a given viewport. |
+| gap | ResponsiveProperty<number> | 20 | The gap between slides to be displayed at a given viewport. |
+| partialDelta | ResponsiveProperty<number> | 0 | The amount of visible pixels of the next slide |
+| class | string | "" | The class of the carousel slider container. |
+| containerClass | string | "" | The class of the carousel container. |
+| slideClass | string | "" | The class of the carousel slide. |
+<!-- END:PROPS -->
 
-To create a production version of your showcase app:
+## Slots
 
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
-
-## Publishing
-
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```bash
-npm publish
-```
+<!-- START:SLOTS -->
+### slide
+Render the slide inside the carousel.
+<!-- START:slide -->
+| Name | Type |
+| ---- | ---- |
+| slide | $$Generic |
+| inView | boolean |
+| index | boolean |
+<!-- END:slide -->
+### pagination
+Render the pagination.
+<!-- START:pagination -->
+| Name | Type |
+| ---- | ---- |
+| canScrollPrev | boolean |
+| prev | typeof prev |
+| canScrollNext | boolean |
+| next | typeof next |
+| nextA11y | ButtonsA11y['a11y'] |
+| prevA11y | ButtonsA11y['a11y'] |
+<!-- END:pagination -->
+### prev
+Render the prev button.
+<!-- START:prev -->
+| Name | Type |
+| ---- | ---- |
+| canScrollPrev | boolean |
+| prev | () => void |
+<!-- END:prev -->
+### next
+Render the next button.
+<!-- START:next -->
+| Name | Type |
+| ---- | ---- |
+| canScrollNext | boolean |
+| next | () => void |
+<!-- END:next -->
+### pagination
+Render the pagination. Usefull if you do not want to group prev and next together.
+<!-- START:pagination -->
+<!-- END:pagination -->
+### progress
+Render the progress bar.
+<!-- START:progress -->
+| Name | Type |
+| ---- | ---- |
+| progress | number |
+| scrollTo | (e: PointerEvent) => void |
+<!-- END:progress -->
+### dots
+Render the dots.
+<!-- START:dots -->
+| Name | Type |
+| ---- | ---- |
+| dots | boolean[] |
+| scrollTo | (index: number) => void |
+<!-- END:dots -->
+<!-- END:SLOTS -->

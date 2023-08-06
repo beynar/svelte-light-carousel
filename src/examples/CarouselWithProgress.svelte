@@ -38,7 +38,7 @@
 	>
 		<div
 			style:transform={`scaleX(${progress}%)`}
-			class="w-full h-full pointer-events-none transition-all origin-left bg-slate-200"
+			class="w-full h-full pointer-events-none transition-all ease-linear origin-left bg-slate-200"
 		/>
 	</div>
 </Carousel>

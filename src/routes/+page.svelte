@@ -1,5 +1,6 @@
 <script lang="ts">
 	import SimpleCarousel, { code as simpleCarouselCode } from '../examples/SimpleCarousel.svelte';
+	import { props, features, slots } from '../infos.js';
 	import CarouselWithDots, {
 		code as CarouselWithDotsCode
 	} from '../examples/CarouselWithDots.svelte';
@@ -32,33 +33,13 @@
 
 	import { scale, slide } from 'svelte/transition';
 
-	const features = [
-		'Lightweight, no dependencies < 2kb of JS and < 3kb of Svelte',
-		'Rely on CSS for layout => no shifting',
-		'Enough features to cover most basic (e-commerce) use cases',
-		'100% headless and customizable',
-		'Slots for arrows, pagination, progress bar, and dots, so you can build your own UI',
-		'Rely on CSS native scroll behavior on mobile and mouse wheel on desktop',
-		'Accessible',
-		"Preserve trackpad and mouse wheel's native behavior",
-		'Performant, no complicated calculation, rely on RAF for sliding animations',
-		'Can show partial view of the next slide',
-		'Responsive properties: layout, gap, and delta',
-		'Snapping and drag free option',
-		'Auto play ready',
-		'Vertical layout option (with auto height calculation enabled by default, but can be disabled)',
-		'SSR friendly',
-		'Disable click on child when dragging',
-		"Won't crush your lighthouse score at all"
-	];
-
 	let examples = [
 		{
 			component: SimpleCarousel,
 			name: 'Simple Carousel',
 			description: 'A simple carousel with no controls or progress bar',
 			code: simpleCarouselCode,
-			preview: false,
+			preview: true,
 			copied: false
 		},
 		{
@@ -245,6 +226,66 @@
 					</button>
 				{/key}
 			</div>
+		</div>
+	{/each}
+
+	<h2>Props</h2>
+	<div class="overflow-x-auto not-prose">
+		<table class="table table-zebra table-sm rounded">
+			{#each Object.keys(props[0]) as prop}
+				<th>{prop}</th>
+			{/each}
+			{#each props as prop}
+				<tr>
+					<td>{prop.name}</td>
+					{#if prop.type.includes('ResponsiveProperty')}
+						<td class="flex gap-2">
+							<div
+								class="tooltip"
+								data-tip={`type ResponsiveProperty<T> = Partial<Record<'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'default', T>>;`}
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="w-4 h-4"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+									/>
+								</svg>
+							</div>
+							{prop.type}</td
+						>
+					{:else}
+						<td>{prop.type}</td>
+					{/if}
+					<td>{prop.default}</td>
+					<td>{prop.description}</td>
+				</tr>
+			{/each}
+		</table>
+	</div>
+	<h2>Slots</h2>
+	{#each slots as { name, description, props }}
+		<h3>{name}</h3>
+		<p>{description}</p>
+		<div class="overflow-x-auto not-prose">
+			<table class="table table-sm rounded">
+				{#each Object.keys(props[0]) as prop}
+					<th>{prop}</th>
+				{/each}
+				{#each props as prop}
+					<tr>
+						<td>{prop.name}</td>
+						<td>{prop.type}</td>
+					</tr>
+				{/each}
+			</table>
 		</div>
 	{/each}
 </div>

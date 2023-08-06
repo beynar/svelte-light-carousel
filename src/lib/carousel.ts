@@ -13,7 +13,6 @@ interface DragScrollParameters {
 	enabled?: boolean;
 	oneAtTime?: boolean;
 	dragFree?: boolean;
-
 	autoPlay?: number;
 	axis?: 'x' | 'y';
 	layout: { [S in Sizes]?: number };
@@ -24,9 +23,6 @@ interface DragScrollParameters {
 }
 
 export type OnInitEvent = {
-	slidesPerView: number;
-	scrollWidth: number;
-
 	scrollTo: (slide: number) => void;
 };
 export type OnChangeEvent = {
@@ -69,6 +65,7 @@ export const dragScroll = (
 	};
 
 	const emitChange = () => {
+		currentSlide = getCurrentSlide();
 		onChange({
 			canScrollNext: currentSlide < slideCount - 1,
 			canScrollPrev: currentSlide > 0,
@@ -82,6 +79,7 @@ export const dragScroll = (
 		if (mouseTargetedSlide) {
 			mouseTargetedSlide.style.pointerEvents = 'auto';
 		}
+		startPlay();
 	};
 	const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 		navigator.userAgent
@@ -157,7 +155,6 @@ export const dragScroll = (
 	const scrollTo = (slide: number) => {
 		if (axis === 'x') {
 			let targetLeft = slide * slideWidth;
-
 			if (targetLeft > node.scrollWidth - node.clientWidth) {
 				targetLeft = node.scrollWidth - node.clientWidth;
 			}
@@ -175,7 +172,6 @@ export const dragScroll = (
 					animation(node.scrollLeft, targetLeft);
 				}
 			} else {
-				currentSlide = getCurrentSlide();
 				emitChange();
 			}
 		} else {
@@ -198,7 +194,6 @@ export const dragScroll = (
 					animation(node.scrollTop, targetTop);
 				}
 			} else {
-				currentSlide = getCurrentSlide();
 				emitChange();
 			}
 		}
@@ -232,8 +227,6 @@ export const dragScroll = (
 				} else {
 					animation(node.scrollLeft, node.scrollLeft + computedDistance * direction);
 				}
-
-				startPlay();
 			}
 		} else {
 			if (distanceY > 10 && distanceY > distanceX) {
@@ -254,7 +247,6 @@ export const dragScroll = (
 				} else {
 					animation(node.scrollTop, node.scrollTop + computedDistance * direction);
 				}
-				startPlay();
 			}
 		}
 		isDown = false;
@@ -289,8 +281,6 @@ export const dragScroll = (
 					ongoingAnimation = false;
 				}, 110);
 
-				currentSlide = getCurrentSlide();
-
 				emitChange();
 			}
 		};
@@ -298,7 +288,6 @@ export const dragScroll = (
 	};
 
 	const init = () => {
-		node.setAttribute('data-is-mobile', (!dragFree && isMobile).toString());
 		slideCount = node.childElementCount;
 		if (autoHeight) {
 			node.style.transform = 'unset';
@@ -311,12 +300,9 @@ export const dragScroll = (
 			node.style.height = slideHeight * slidesPerView + delta + 'px';
 		}
 		onInit({
-			scrollWidth: node.scrollWidth,
-			slidesPerView,
 			scrollTo
 		});
 		emitChange();
-		startPlay();
 	};
 	window.addEventListener('resize', () => {
 		init();
@@ -328,14 +314,10 @@ export const dragScroll = (
 	});
 
 	const debouncedScroll = () => {
-		console.log('debouncedScroll');
-		currentSlide = getCurrentSlide();
 		emitChange();
-		startPlay();
 	};
 
-	const onScroll = (e: Event) => {
-		e.stopPropagation();
+	const onScroll = () => {
 		if (!isDown && !ongoingAnimation) {
 			debouncedScroll();
 		}

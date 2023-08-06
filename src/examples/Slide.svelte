@@ -15,11 +15,11 @@
 		'linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)',
 		'linear-gradient(120deg, #f093fb 0%, #f5576c 100%)'
 	];
-	const randomGragient = gradients[Math.floor(Math.random() * gradients.length)];
+	const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
 </script>
 
-<div class="card w-full min-h-full text-primary-content" style:background={randomGragient}>
-	<div class="card-body flex items-center justify-center">
+<div class="card w-full min-h-full text-primary-content" style:background={randomGradient}>
+	<div class="card-body md:py-16 items-center justify-center">
 		<h2 class="card-title text-2xl">{title}</h2>
 	</div>
 </div>
