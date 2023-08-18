@@ -78,7 +78,8 @@ export const dragScroll = (
 		}
 	};
 
-	const emitChange = (currentSlide = getCurrentSlide()) => {
+	const emitChange = () => {
+		currentSlide = getCurrentSlide();
 		onChange({
 			canScrollNext: currentSlide < slideCount - 1,
 			canScrollPrev: currentSlide > 0,
@@ -199,10 +200,6 @@ export const dragScroll = (
 			const targetTop = slide * slideHeight + slide;
 			node.scrollTop = targetTop;
 		}
-		setTimeout(() => {
-			currentSlide = slide;
-			emitChange();
-		}, 1010);
 	};
 	const scrollTo = (slide: number) => {
 		if (currentAxis === 'x') {
