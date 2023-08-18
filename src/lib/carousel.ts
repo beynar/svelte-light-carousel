@@ -24,7 +24,7 @@ interface DragScrollParameters {
 	pauseOnHover?: boolean;
 	dragFree?: boolean;
 	autoPlay?: number;
-	axis?: 'x' | 'y';
+	axis?: { [S in Sizes]?: 'x' | 'y' };
 	layout: { [S in Sizes]?: number };
 	onInit: (event: OnInitEvent) => void;
 	partialDelta?: { [S in Sizes]?: number };
@@ -34,6 +34,7 @@ interface DragScrollParameters {
 }
 
 export type OnInitEvent = {
+	navigate: (slide: number) => void;
 	scrollTo: (slide: number) => void;
 };
 export type OnChangeEvent = {
@@ -51,7 +52,7 @@ export const dragScroll = (
 		id,
 		oneAtTime = false,
 		layout,
-		axis = 'x',
+		axis = { default: 'x' },
 		enabled = true,
 		partialDelta,
 		dragFree,
@@ -63,22 +64,21 @@ export const dragScroll = (
 	}: DragScrollParameters
 ) => {
 	const getCurrentSlide = () => {
-		if (axis === 'x') {
+		if (currentAxis === 'x') {
 			if (node.scrollLeft < slideWidth / 2) {
 				return 0;
 			}
 			if (node.scrollLeft > node.scrollWidth - node.clientWidth - slideWidth / 2) {
 				return slideCount - slidesPerView;
 			}
-
-			return Math.floor(node.scrollLeft / slideWidth);
+			console.log('here', node.scrollLeft, slideWidth);
+			return Math.ceil((node.scrollLeft - slideWidth / 3) / slideWidth);
 		} else {
 			return Math.floor(node.scrollTop / slideHeight);
 		}
 	};
 
-	const emitChange = () => {
-		currentSlide = getCurrentSlide();
+	const emitChange = (currentSlide = getCurrentSlide()) => {
 		onChange({
 			canScrollNext: currentSlide < slideCount - 1,
 			canScrollPrev: currentSlide > 0,
@@ -109,6 +109,7 @@ export const dragScroll = (
 	const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 		navigator.userAgent
 	);
+	let currentAxis: 'x' | 'y' = axis?.[getSize()] ?? axis?.['default'] ?? 'x';
 	let isDown = false;
 	let startTime: number;
 	let startScroll: number;
@@ -164,7 +165,7 @@ export const dragScroll = (
 
 		startX = e.pageX - node.offsetLeft;
 		startY = e.pageY - node.offsetTop;
-		startScroll = axis === 'x' ? node.scrollLeft : node.scrollTop;
+		startScroll = currentAxis === 'x' ? node.scrollLeft : node.scrollTop;
 
 		window.addEventListener('mouseup', handleMouseUpAndLeave);
 		window.addEventListener('mousemove', handleMouseMove);
@@ -173,7 +174,7 @@ export const dragScroll = (
 	const handleMouseMove = (e: PointerEvent | MouseEvent) => {
 		if (isDown) {
 			e.preventDefault();
-			if (axis === 'x') {
+			if (currentAxis === 'x') {
 				currentX = e.pageX - node.offsetLeft;
 				node.scrollLeft = startScroll - (currentX - startX);
 			} else {
@@ -190,9 +191,21 @@ export const dragScroll = (
 			}
 		}
 	};
-
+	const navigate = (slide: number) => {
+		if (currentAxis === 'x') {
+			const targetLeft = slide * slideWidth;
+			node.scrollLeft = targetLeft;
+		} else {
+			const targetTop = slide * slideHeight + slide;
+			node.scrollTop = targetTop;
+		}
+		setTimeout(() => {
+			currentSlide = slide;
+			emitChange();
+		}, 1010);
+	};
 	const scrollTo = (slide: number) => {
-		if (axis === 'x') {
+		if (currentAxis === 'x') {
 			let targetLeft = slide * slideWidth;
 			if (targetLeft > node.scrollWidth - node.clientWidth) {
 				targetLeft = node.scrollWidth - node.clientWidth;
@@ -205,10 +218,13 @@ export const dragScroll = (
 				ongoingAnimation = true;
 				if (targetLeft < slideWidth / 2) {
 					animation(node.scrollLeft, 0);
+					// emitChange(slide);
 				} else if (targetLeft > node.scrollWidth - node.clientWidth) {
 					animation(node.scrollLeft, node.scrollWidth);
+					// emitChange(slide);
 				} else {
 					animation(node.scrollLeft, targetLeft);
+					// emitChange(slide);
 				}
 			} else {
 				emitChange();
@@ -246,7 +262,7 @@ export const dragScroll = (
 		const distanceX = Math.abs(currentX - startX);
 		const distanceY = Math.abs(currentY - startY);
 
-		if (axis === 'x') {
+		if (currentAxis === 'x') {
 			if (distanceX > 10 && distanceX > distanceY) {
 				const speedX = distanceX / time;
 				const direction = startX > currentX ? 1 : -1;
@@ -293,23 +309,28 @@ export const dragScroll = (
 		window.removeEventListener('mousemove', handleMouseMove);
 	};
 
-	const easeInOutCubic = (t: number) =>
-		t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-	const animation = (start: number, target: number) => {
-		const lerp = (start: number, end: number, time: number, r = easeInOutCubic(time)) =>
+	function easeOutCubic(t: number): number {
+		return 1 - Math.pow(1 - t, 3.5);
+	}
+
+	const animation = (start: number, target: number, duration = 1) => {
+		const lerp = (start: number, end: number, time: number, r = easeOutCubic(time)) =>
 			start * (1 - r) + end * r;
+
+		const frames = duration * 60; // number of frames during duration (at 60 fps)
 		let time = 0;
+		const step = 1 / frames;
 		const animateScroll = () => {
-			if (axis === 'x') {
+			if (currentAxis === 'x') {
 				node.scrollLeft = lerp(start, target, time);
 			} else {
 				node.scrollTop = lerp(start, target, time);
 			}
-			time += 0.06;
+			time += step;
 			if (time < 1) {
 				requestAnimationFrame(animateScroll);
 			} else {
-				if (axis === 'x') {
+				if (currentAxis === 'x') {
 					node.scrollLeft = target;
 				} else {
 					node.scrollTop = target;
@@ -334,31 +355,29 @@ export const dragScroll = (
 		slideWidth = (node.firstChild as HTMLElement)?.clientWidth;
 		slideHeight = (node.firstChild as HTMLElement)?.clientHeight;
 		slidesPerView = layout?.[getSize()] ?? layout?.['default'] ?? 1;
-		if (autoHeight && axis === 'y') {
+		currentAxis = axis?.[getSize()] ?? axis?.['default'] ?? 'x';
+		if (autoHeight && currentAxis === 'y') {
 			const delta = partialDelta?.[getSize()] ?? partialDelta?.['default'] ?? 0;
 			node.style.height = slideHeight * slidesPerView + delta + 'px';
 		}
 		onInit({
+			navigate,
 			scrollTo
 		});
 		emitChange();
 	};
 	window.addEventListener('resize', () => {
 		init();
-		if (axis === 'x') {
+		if (currentAxis === 'x') {
 			node.scrollLeft = currentSlide * slideWidth + currentSlide;
 		} else {
 			node.scrollTop = currentSlide * slideHeight + currentSlide;
 		}
 	});
 
-	const debouncedScroll = () => {
-		emitChange();
-	};
-
 	const onScroll = () => {
 		if (!isDown && !ongoingAnimation) {
-			debouncedScroll();
+			emitChange();
 		}
 	};
 	const addEvents = ({ autoPlay, pauseOnHover }: { autoPlay?: number; pauseOnHover?: boolean }) => {

@@ -56,13 +56,13 @@
 	export let slides: Slide[] = [];
 	export let withGrabCursor: boolean = true;
 	export let key: keyof Slide | undefined = undefined;
-	export let axis: 'x' | 'y' = 'x';
+	export let axis: ResponsiveProperty<'x' | 'y'> = { default: 'x' };
 	export let dragFree: boolean = false;
 	export let disableNativeScroll: ResponsiveProperty<boolean> = {
 		default: false
 	};
 	export let oneAtTime: boolean = false;
-	export let autoHeight: boolean = axis === 'y';
+	export let autoHeight: boolean = true;
 	export let autoPlay: number = 0;
 	export let pauseOnHover: boolean = false;
 	export let layout: ResponsiveProperty = {
@@ -86,12 +86,14 @@
 	let mounted: boolean = false;
 
 	let scrollTo: (slide: number) => void;
+	let navigate: (slide: number) => void;
 
-	const next = () => canScrollNext && scrollTo(currentSlide + 1);
-	const prev = () => canScrollPrev && scrollTo(currentSlide - 1);
+	const next = () => canScrollNext && navigate(currentSlide + 1);
+	const prev = () => canScrollPrev && navigate(currentSlide - 1);
 
 	const onInit = (event: OnInitEvent) => {
 		scrollTo = event.scrollTo;
+		navigate = event.navigate;
 		mounted = true;
 	};
 
@@ -109,10 +111,10 @@
 		if (track instanceof HTMLElement) {
 			const pointerPositionOnTrackInPercent =
 				(e.clientX - track.getBoundingClientRect().left) / track.clientWidth;
-			scrollTo(Math.floor(pointerPositionOnTrackInPercent * slides.length));
+			navigate(Math.floor(pointerPositionOnTrackInPercent * slides.length));
 		}
 	};
-	const scrollDot = (dot: number) => scrollTo(dot);
+	const scrollDot = (dot: number) => navigate(dot);
 
 	const buttonA11y = (type: 'prev' | 'next') => ({
 		'aria-controls': `${id}-slides`,
@@ -126,7 +128,6 @@
 			class={$$props.class}
 			data-carousel-slider
 			data-carousel-with-grab-cursor={withGrabCursor}
-			data-carousel-axis={axis}
 			data-dragging="false"
 			data-drag-free={dragFree}
 			use:dragScroll={{
@@ -142,34 +143,34 @@
 				autoPlay,
 				axis
 			}}
-			style:--padding-xs={`${axis === 'x' ? '0 ' : ''}${gap.xs ?? gap.default ?? 20}px ${
-				axis === 'x' ? '' : '0'
-			}`}
-			style:--padding-sm={`${axis === 'x' ? '0 ' : ''}${gap.sm ?? gap.default ?? 20}px ${
-				axis === 'x' ? '' : '0'
-			}`}
-			style:--padding-md={`${axis === 'x' ? '0 ' : ''}${gap.md ?? gap.default ?? 20}px ${
-				axis === 'x' ? '' : '0'
-			}`}
-			style:--padding-lg={`${axis === 'x' ? '0 ' : ''}${gap.lg ?? gap.default ?? 20}px ${
-				axis === 'x' ? '' : '0'
-			}`}
-			style:--padding-xl={`${axis === 'x' ? '0 ' : ''}${gap.xl ?? gap.default ?? 20}px ${
-				axis === 'x' ? '' : '0'
-			}`}
-			style:--overflow-xs={axis === 'x'
+			style:--padding-xs={`${(axis.xs || axis.default) === 'x' ? '0 ' : ''}${
+				gap.xs ?? gap.default ?? 20
+			}px ${(axis.xs || axis.default) === 'x' ? '' : '0'}`}
+			style:--padding-sm={`${(axis.sm || axis.default) === 'x' ? '0 ' : ''}${
+				gap.sm ?? gap.default ?? 20
+			}px ${(axis.sm || axis.default) === 'x' ? '' : '0'}`}
+			style:--padding-md={`${(axis.md || axis.default) === 'x' ? '0 ' : ''}${
+				gap.md ?? gap.default ?? 20
+			}px ${(axis.md || axis.default) === 'x' ? '' : '0'}`}
+			style:--padding-lg={`${(axis.lg || axis.default) === 'x' ? '0 ' : ''}${
+				gap.lg ?? gap.default ?? 20
+			}px ${(axis.lg || axis.default) === 'x' ? '' : '0'}`}
+			style:--padding-xl={`${(axis.xl || axis.default) === 'x' ? '0 ' : ''}${
+				gap.xl ?? gap.default ?? 20
+			}px ${(axis.xl || axis.default) === 'x' ? '' : '0'}`}
+			style:--overflow-xs={axis.xs === 'x'
 				? `${disableNativeScroll.xs ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
 				: `visible ${disableNativeScroll.xs ?? disableNativeScroll.default ? 'hidden' : 'auto'}`}
-			style:--overflow-sm={axis === 'x'
+			style:--overflow-sm={axis.sm === 'x'
 				? `${disableNativeScroll.sm ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
 				: `visible ${disableNativeScroll.sm ?? disableNativeScroll.default ? 'hidden' : 'auto'}`}
-			style:--overflow-md={axis === 'x'
+			style:--overflow-md={axis.md === 'x'
 				? `${disableNativeScroll.md ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
 				: `visible ${disableNativeScroll.md ?? disableNativeScroll.default ? 'hidden' : 'auto'}`}
-			style:--overflow-lg={axis === 'x'
+			style:--overflow-lg={axis.lg === 'x'
 				? `${disableNativeScroll.lg ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
 				: `visible ${disableNativeScroll.lg ?? disableNativeScroll.default ? 'hidden' : 'auto'}`}
-			style:--overflow-xl={axis === 'x'
+			style:--overflow-xl={axis.xl === 'x'
 				? `${disableNativeScroll.xl ?? disableNativeScroll.default ? 'hidden' : 'auto'} visible`
 				: `visible ${disableNativeScroll.xl ?? disableNativeScroll.default ? 'hidden' : 'auto'}`}
 			style:--layout-xs={`${100 / (layout.xs ?? layout.default ?? 1)}%`}
@@ -182,12 +183,17 @@
 			style:--partial-delta-md={`${partialDelta.md ?? partialDelta.default ?? 0}px`}
 			style:--partial-delta-lg={`${partialDelta.lg ?? partialDelta.default ?? 0}px`}
 			style:--partial-delta-xl={`${partialDelta.xl ?? partialDelta.default ?? 0}px`}
-			style:--flex-direction={axis === 'x' ? 'row' : 'column'}
-			style:--display={axis === 'x' ? 'flex' : 'grid'}
-			style:--snap-type={axis === 'x' ? 'x mandatory' : 'y mandatory'}
+			data-axis-xs={axis.xs || axis.default || 'x'}
+			data-axis-sm={axis.sm || axis.default || 'x'}
+			data-axis-md={axis.md || axis.default || 'x'}
+			data-axis-lg={axis.lg || axis.default || 'x'}
+			data-axis-xl={axis.xl || axis.default || 'x'}
 			style:transform={autoHeight ? 'scaleY(0%)' : ''}
 			id={`${id}-slides`}
 		>
+			<!-- style:--flex-direction={axis === 'x' ? 'row' : 'column'}
+			style:--display={axis === 'x' ? 'flex' : 'grid'}
+			style:--snap-type={axis === 'x' ? 'x mandatory' : 'y mandatory'} -->
 			{#each slides as slide, index (key ? slide[key] : index)}
 				<div
 					id={`${id}-slide-${index + 1}`}
@@ -235,15 +241,18 @@
 		flex-direction: column;
 		min-width: 100%;
 	}
-	[data-carousel-slider] {
-		display: var(--display);
-		flex-direction: var(--flex-direction);
 
+	[data-carousel-slider] {
+		display: flex;
+		flex-direction: row;
 		user-select: none;
 		position: relative;
 		flex-wrap: nowrap;
 		max-height: 100%;
 		max-width: 100%;
+	}
+	:global([data-carousel-slider][data-dragging='false'][data-drag-free='false']) {
+		scroll-snap-type: x mandatory;
 	}
 	[data-carousel-with-grab-cursor='true'] {
 		cursor: grab;
@@ -263,6 +272,14 @@
 			flex: 0 0 calc(var(--layout-xs) - var(--partial-delta-xs));
 			padding: var(--padding-xs);
 		}
+		:global([data-carousel-slider][data-axis-xs='y']) {
+			flex-direction: column !important;
+		}
+		:global(
+				[data-carousel-slider][data-axis-xs='y'][data-dragging='false'][data-drag-free='false']
+			) {
+			scroll-snap-type: y mandatory;
+		}
 	}
 	@media (min-width: 640px) {
 		[data-carousel-slider] {
@@ -272,6 +289,14 @@
 			flex: 0 0 calc(var(--layout-sm) - var(--partial-delta-sm));
 			padding: var(--padding-sm);
 		}
+		:global([data-carousel-slider][data-axis-sm='y']) {
+			flex-direction: column !important;
+		}
+		:global(
+				[data-carousel-slider][data-axis-sm='y'][data-dragging='false'][data-drag-free='false']
+			) {
+			scroll-snap-type: y mandatory;
+		}
 	}
 	@media (min-width: 768px) {
 		[data-carousel-slider] {
@@ -280,6 +305,14 @@
 		[data-carousel-slider] > [data-carousel-slide] {
 			flex: 0 0 calc(var(--layout-md) - var(--partial-delta-md));
 			padding: var(--padding-md);
+		}
+		:global([data-carousel-slider][data-axis-md='y']) {
+			flex-direction: column !important;
+		}
+		:global(
+				[data-carousel-slider][data-axis-md='y'][data-dragging='false'][data-drag-free='false']
+			) {
+			scroll-snap-type: y mandatory;
 		}
 	}
 
@@ -291,6 +324,14 @@
 			flex: 0 0 calc(var(--layout-lg) - var(--partial-delta-lg));
 			padding: var(--padding-lg);
 		}
+		:global([data-carousel-slider][data-axis-lg='y']) {
+			flex-direction: column !important;
+		}
+		:global(
+				[data-carousel-slider][data-axis-lg='y'][data-dragging='false'][data-drag-free='false']
+			) {
+			scroll-snap-type: y mandatory;
+		}
 	}
 	@media (min-width: 1280px) {
 		[data-carousel-slider] {
@@ -299,6 +340,14 @@
 		[data-carousel-slider] > [data-carousel-slide] {
 			flex: 0 0 calc(var(--layout-xl) - var(--partial-delta-xl));
 			padding: var(--padding-xl);
+		}
+		:global([data-carousel-slider][data-axis-xl='y']) {
+			flex-direction: column !important;
+		}
+		:global(
+				[data-carousel-slider][data-axis-xl='y'][data-dragging='false'][data-drag-free='false']
+			) {
+			scroll-snap-type: y mandatory;
 		}
 	}
 
@@ -315,7 +364,6 @@
 	}
 
 	:global([data-carousel-slider][data-dragging='false'][data-drag-free='false']) {
-		scroll-snap-type: var(--snap-type);
 		scroll-snap-type: mandatory;
 		scroll-behavior: smooth;
 	}
