@@ -1,5 +1,12 @@
 <script>
 	import '../app.css';
+	/**
+	 * @typedef {Object} Props
+	 * @property {import('svelte').Snippet} [children]
+	 */
+
+	/** @type {Props} */
+	let { children } = $props();
 </script>
 
 <svelte:head>
@@ -31,7 +38,7 @@
 		>
 		<a class="btn btn-ghost normal-case" href="#examples">Examples</a>
 		<a class="btn btn-ghost normal-case" href="#props">Props</a>
-		<a class="btn btn-ghost normal-case" href="#slots">Slots</a>
+		<a class="btn btn-ghost normal-case" href="#slots">Snippets</a>
 	</div>
 	<a
 		class="btn btn-ghost normal-case inline-flex"
@@ -48,7 +55,7 @@
 		<div class="md:inline-flex hidden">Star on Github</div>
 	</a>
 </div>
-<slot />
+{@render children?.()}
 
 <div class="navbar bg-base-100 sticky top-0 left-0 z-10">
 	<a

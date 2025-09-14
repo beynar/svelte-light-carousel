@@ -3,7 +3,7 @@ export const features = [
 	'Rely on CSS for layout => no shifting',
 	'Enough features to cover most basic (e-commerce) use cases',
 	'100% headless and customizable',
-	'Slots for arrows, pagination, progress bar, and dots, so you can build your own UI',
+	'Snippets for arrows, pagination, progress bar, and dots, so you can build your own UI',
 	'Rely on CSS native scroll behavior on mobile and mouse wheel on desktop',
 	'Accessible WAI-ARIA compliant + good semantic structure',
 	"Preserve trackpad and mouse wheel's native behavior",

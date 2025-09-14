@@ -1,7 +1,9 @@
-<script context="module">
+<script module>
 	export const code = `
-	<Carousel axis="y" {slides} layout={{ default: 2 }} partialDelta={{ default: 100 }}>
-		<Slide slot="slide" let:slide {...slide} />
+	<Carousel axis={{ default: 'y' }} {slides} layout={{ default: 2 }} partialDelta={{ default: 100 }} containerClass="max-h-[500px]">
+		{#snippet slide({ slide })}
+			<Slide {...slide} />
+		{/snippet}
 	</Carousel>
 	`;
 </script>
@@ -12,6 +14,8 @@
 	import Slide from './Slide.svelte';
 </script>
 
-<Carousel axis={{ default: 'y' }} {slides} layout={{ default: 2 }} partialDelta={{ default: 100 }}>
-	<Slide slot="slide" let:slide {...slide} />
+<Carousel axis={{ default: 'y' }} {slides} layout={{ default: 2 }} partialDelta={{ default: 100 }} containerClass="max-h-[500px]">
+	{#snippet slide({ slide })}
+		<Slide {...slide} />
+	{/snippet}
 </Carousel>

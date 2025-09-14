@@ -6,6 +6,7 @@ A lightweight carousel component for Svelte focused on low runtime and minimalis
 npm i svelte-light-carousel
 pnpm add svelte-light-carousel
 yarn add svelte-light-carousel
+bun add svelte-light-carousel
 ```
 
 ## Usage
@@ -17,7 +18,9 @@ yarn add svelte-light-carousel
 </script>
 
 <Carousel {slides}>
-	<div slot="slide" let:slide>{slide.title}</div>
+	{#snippet slide({ slide })}
+		{slide.title}
+	{/snippet}
 </Carousel>
 ```
 
@@ -28,7 +31,7 @@ yarn add svelte-light-carousel
 - Rely on CSS for layout => no shifting
 - Enough features to cover most basic (e-commerce) use cases
 - 100% headless and customizable
-- Slots for arrows, pagination, progress bar, and dots, so you can build your own UI
+- Snippets for arrows, pagination, progress bar, and dots, so you can build your own UI
 - Rely on CSS native scroll behavior on mobile and mouse wheel on desktop
 - Accessible WAI-ARIA compliant + good semantic structure
 - Preserve trackpad and mouse wheel's native behavior
@@ -66,7 +69,7 @@ yarn add svelte-light-carousel
 | slideClass | string | "" | The class of the carousel slide. |
 <!-- END:PROPS -->
 
-## Slots
+## Snippets
 
 <!-- START:SLOTS -->
 ### slide

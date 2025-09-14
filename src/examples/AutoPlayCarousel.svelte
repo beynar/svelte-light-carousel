@@ -1,8 +1,10 @@
-<script context="module">
+<script module>
 	export const code = `
 	// 5 seconds auto play
 	<Carousel autoPlay={5} {slides}>
-		<Slide slot="slide" let:slide {...slide} />
+		{#snippet slide({ slide })}
+			<Slide {...slide} />
+		{/snippet}
 	</Carousel>`;
 </script>
 
@@ -12,6 +14,8 @@
 	import { slides } from './slides.js';
 </script>
 
-<Carousel autoPlay={1} {slides}>
-	<Slide slot="slide" let:slide {...slide} />
+<Carousel autoPlay={5} {slides}>
+	{#snippet slide({ slide })}
+		<Slide {...slide} />
+	{/snippet}
 </Carousel>
