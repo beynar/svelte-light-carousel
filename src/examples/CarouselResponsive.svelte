@@ -1,4 +1,4 @@
-<script context="module">
+<script module>
 	export const code = `
 	<Carousel
 		{slides}
@@ -10,7 +10,9 @@
 			xl: 4
 		}}
 	>
-		<Slide slot="slide" let:slide {...slide} />
+		{#snippet slide({ slide })}
+			<Slide {...slide} />
+		{/snippet}
 	</Carousel>
 	`;
 </script>
@@ -31,5 +33,7 @@
 		xl: 4
 	}}
 >
-	<Slide slot="slide" let:slide {...slide} />
+	{#snippet slide({ slide })}
+		<Slide {...slide} />
+	{/snippet}
 </Carousel>

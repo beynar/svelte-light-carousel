@@ -1,5 +1,6 @@
-<script lang="ts">
-	type Slide = $$Generic;
+<script lang="ts" generics="Slide">
+	import type { Snippet } from 'svelte';
+
 	type ButtonsA11y = {
 		a11y: {
 			'aria-controls': string;
@@ -9,38 +10,6 @@
 	type DotsA11y = {
 		role: string;
 		'aria-label': string;
-	};
-	type $$Slots = {
-		slide: {
-			slide: Slide;
-			inView: boolean;
-			index: number;
-		};
-		pagination: {
-			canScrollPrev: boolean;
-			prev: typeof prev;
-			canScrollNext: boolean;
-			next: typeof next;
-			nextA11y: ButtonsA11y['a11y'];
-			prevA11y: ButtonsA11y['a11y'];
-		};
-		prev: {
-			canScrollPrev: boolean;
-			prev: typeof prev;
-		} & ButtonsA11y;
-		next: {
-			canScrollNext: boolean;
-			next: typeof next;
-		} & ButtonsA11y;
-		progress: {
-			progress: number;
-			scrollTo: typeof scrollProgress;
-		};
-		dots: {
-			dots: Dot[];
-			a11y: DotsA11y;
-			scrollTo: typeof scrollDot;
-		};
 	};
 
 	import {
@@ -52,38 +21,69 @@
 		type Dot
 	} from './carousel.js';
 
-	export let id = 'carousel' + Math.random().toString(36).substring(2, 9);
-	export let slides: Slide[] = [];
-	export let withGrabCursor: boolean = true;
-	export let key: keyof Slide | undefined = undefined;
-	export let axis: ResponsiveProperty<'x' | 'y'> = { default: 'x' };
-	export let dragFree: boolean = false;
-	export let disableNativeScroll: ResponsiveProperty<boolean> = {
-		default: false
-	};
-	export let oneAtTime: boolean = false;
-	export let autoHeight: boolean = true;
-	export let autoPlay: number = 0;
-	export let pauseOnHover: boolean = false;
-	export let layout: ResponsiveProperty = {
-		default: 1
-	};
-	export let gap: ResponsiveProperty = {
-		default: 20
-	};
-	export let partialDelta: ResponsiveProperty = {
-		default: 0
-	};
-	export let containerClass: string = '';
-	export let slideClass: string = '';
+	interface Props {
+		class?: string,
+		id?: string;
+		slides?: Slide[],
+		withGrabCursor?: boolean;
+		key?: keyof Slide | undefined;
+		axis?: ResponsiveProperty<'x' | 'y'>;
+		dragFree?: boolean;
+		disableNativeScroll?: ResponsiveProperty<boolean>;
+		oneAtTime?: boolean;
+		autoHeight?: boolean;
+		autoPlay?: number;
+		pauseOnHover?: boolean;
+		layout?: ResponsiveProperty;
+		gaps?: ResponsiveProperty;
+		partialDelta?: ResponsiveProperty;
+		containerClass?: string;
+		slideClass?: string;
+	}
 
-	let slidesInView: number[] = [];
-	let dots: Dot[] = [];
-	let canScrollNext = false;
-	let canScrollPrev = false;
-	let progress: number = 0;
-	let currentSlide: number = 0;
-	let mounted: boolean = false;
+	interface Snippets {
+		slide: Snippet<[{slide: Slide, inView: boolean, index: number}]>;
+		pagination?: Snippet<[{canScrollPrev: boolean, prev: typeof prev, canScrollNext: boolean, next: typeof next, nextA11y: ButtonsA11y['a11y'], prevA11y: ButtonsA11y['a11y']}]>;
+		prev?: Snippet<[{canScrollPrev: boolean, prev: typeof prev} & ButtonsA11y]>;
+		next?: Snippet<[{canScrollNext: boolean, next: typeof next} & ButtonsA11y]>;
+		progress?: Snippet<[{progress: number, scrollTo: typeof scrollProgress}]>;
+		dots?: Snippet<[{dots: Dot[], a11y: DotsA11y, scrollTo: typeof scrollDot}]>;
+	}
+
+	let {
+		class: className,
+		id = 'carousel' + Math.random().toString(36).substring(2, 9),
+		slides = [],
+		withGrabCursor = true,
+		key = undefined,
+		axis = { default: 'x' },
+		dragFree = false,
+		disableNativeScroll = { default: false },
+		oneAtTime = false,
+		autoHeight = false,
+		autoPlay = 0,
+		pauseOnHover = false,
+		layout = { default: 1 },
+		gaps: gap = { default: 20 },
+		partialDelta = { default: 0 },
+		containerClass = '',
+		slideClass = '',
+
+		slide: slideSnippet,
+		pagination: paginationSnippet,
+		prev: prevSnippet,
+		next: nextSnippet,
+		progress: progressSnippet,
+		dots: dotsSnippet,
+	}: Props & Snippets = $props();
+
+	let slidesInView: number[] = $state([]);
+	let dots: Dot[] = $state([]);
+	let canScrollNext = $state(false);
+	let canScrollPrev = $state(false);
+	let progress: number = $state(0);
+	let currentSlide: number = $state(0);
+	let mounted: boolean = $state(false);
 
 	let scrollTo: (slide: number) => void;
 	let navigate: (slide: number) => void;
@@ -125,7 +125,7 @@
 {#if slides.length > 0}
 	<div aria-roledescription="carousel" {id} class={containerClass} data-carousel-container>
 		<div
-			class={$$props.class}
+			class={className}
 			data-carousel-slider
 			data-carousel-with-grab-cursor={withGrabCursor}
 			data-dragging="false"
@@ -203,32 +203,16 @@
 					class={slideClass}
 					data-carousel-slide={index}
 				>
-					<slot name="slide" inView={slidesInView.includes(index)} {index} {slide} />
+					{@render slideSnippet({inView: slidesInView.includes(index), index, slide})}
 				</div>
 			{/each}
 		</div>
 
-		<slot name="progress" scrollTo={scrollProgress} {progress} />
-		<slot
-			name="dots"
-			a11y={{
-				'aria-label': 'Slides',
-				role: 'tablist'
-			}}
-			scrollTo={scrollDot}
-			{dots}
-		/>
-		<slot
-			name="pagination"
-			{next}
-			{canScrollNext}
-			{prev}
-			{canScrollPrev}
-			nextA11y={buttonA11y('next')}
-			prevA11y={buttonA11y('prev')}
-		/>
-		<slot name="next" {next} {canScrollNext} a11y={buttonA11y('next')} />
-		<slot name="prev" {prev} {canScrollPrev} a11y={buttonA11y('prev')} />
+		{@render progressSnippet?.({scrollTo: scrollProgress, progress})}
+		{@render dotsSnippet?.({a11y: {'aria-label': 'Slides', role: 'tablist'}, scrollTo: scrollDot, dots})}
+		{@render paginationSnippet?.({next, canScrollNext, prev, canScrollPrev, nextA11y: buttonA11y('next'), prevA11y: buttonA11y('prev')})}
+		{@render nextSnippet?.({next, canScrollNext, a11y: buttonA11y('next')})}
+		{@render prevSnippet?.({prev, canScrollPrev, a11y: buttonA11y('prev')})}
 	</div>
 {/if}
 
