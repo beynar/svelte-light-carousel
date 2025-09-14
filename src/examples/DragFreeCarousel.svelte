@@ -1,7 +1,9 @@
-<script context="module">
+<script module>
 	export const code = `
 	<Carousel dragFree {slides}>
-		<Slide slot="slide" let:slide {...slide} />
+		{#snippet slide({ slide })}
+			<Slide {...slide} />
+		{/snippet}
 	</Carousel>
 	`;
 </script>
@@ -13,5 +15,7 @@
 </script>
 
 <Carousel dragFree {slides}>
-	<Slide slot="slide" let:slide {...slide} />
+	{#snippet slide({ slide })}
+		<Slide {...slide} />
+	{/snippet}
 </Carousel>

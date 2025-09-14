@@ -34,7 +34,7 @@
 	import Carousel from '$lib/Carousel.svelte';
 	import Slide from '../examples/Slide.svelte';
 
-	let examples = [
+	let examples = $state([
 		{
 			component: SimpleCarousel,
 			name: 'Simple Carousel',
@@ -116,7 +116,7 @@
 			preview: true,
 			copied: false
 		}
-	];
+	]);
 
 	const copy = (e: MouseEvent) => {
 		const target = e.target as HTMLElement;
@@ -136,17 +136,21 @@
 
 	<div class="mockup-code not-prose">
 		<pre
-			on:pointerdown={copy}
+			onpointerdown={copy}
 			class="hover:bg-slate-100 md:mx-10 cursor-pointer w-fit rounded"
 			data-prefix="$"><code>npm i svelte-light-carousel</code></pre>
 		<pre
-			on:pointerdown={copy}
+			onpointerdown={copy}
 			class="hover:bg-slate-100 md:mx-10 cursor-pointer w-fit rounded"
 			data-prefix="$"><code>pnpm add svelte-light-carousel</code></pre>
 		<pre
-			on:pointerdown={copy}
+			onpointerdown={copy}
 			class="hover:bg-slate-100 md:mx-10 cursor-pointer w-fit rounded"
 			data-prefix="$"><code>yarn add svelte-light-carousel</code></pre>
+		<pre
+			onpointerdown={copy}
+			class="hover:bg-slate-100 md:mx-10 cursor-pointer w-fit rounded"
+			data-prefix="$"><code>bun add svelte-light-carousel</code></pre>
 	</div>
 	<h2 class="!text-slate-100">Features</h2>
 	<Carousel
@@ -156,7 +160,9 @@
 		autoPlay={0}
 		pauseOnHover
 	>
-		<Slide slot="slide" let:slide title={slide} />
+		{#snippet slide({ slide })}
+				<Slide   title={slide} />
+			{/snippet}
 	</Carousel>
 	<ul class="px-0">
 		{#each features as feature}
@@ -182,22 +188,23 @@
 		{/each}
 	</ul>
 	<h2 id="examples" class="scroll-m-20 !text-slate-100">Examples</h2>
-	{#each examples as { component, name, description, preview, copied, code = "" } (name)}
+	{#each examples as { component, name, description, preview, copied, code = "" }, i (name)}
+		{@const SvelteComponent = component}
 		<div>
 			<h3>{name}</h3>
 			<p>{description}</p>
 			<div class="tabs">
 				<button
-					on:click={() => {
-						preview = true;
+					onclick={() => {
+						examples[i].preview = true;
 					}}
 					class:tab-active={preview}
 					class:text-slate-100={preview}
 					class="tab tab-lifted text-slate-400">Preview</button
 				>
 				<button
-					on:click={() => {
-						preview = false;
+					onclick={() => {
+						examples[i].preview = false;
 					}}
 					class:tab-active={!preview}
 					class:text-slate-100={!preview}
@@ -207,7 +214,7 @@
 			<div class="py-4">
 				{#key preview}
 					<div hidden={!preview} class="not-prose">
-						<svelte:component this={component} />
+						<SvelteComponent />
 					</div>
 				{/key}
 
@@ -215,11 +222,11 @@
 					<button
 						aria-label="Copy code to clipboard"
 						hidden={preview}
-						on:click={() => {
-							copied = true;
+						onclick={() => {
+							examples[i].copied = true;
 							navigator.clipboard.writeText(code);
 							setTimeout(() => {
-								copied = false;
+								examples[i].copied = false;
 							}, 1000);
 						}}
 						class="mockup-code w-full text-left not-prose cursor-pointer hover:ring-1 hover:ring-slate-100"
@@ -283,7 +290,7 @@
 			{/each}
 		</table>
 	</div>
-	<h2 id="slots" class="scroll-m-20 !text-slate-100">Slots</h2>
+	<h2 id="slots" class="scroll-m-20 !text-slate-100">Snippets</h2>
 	{#each slots as { name, description, props }}
 		<h3>{name}</h3>
 		<p>{description}</p>

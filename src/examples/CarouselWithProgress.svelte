@@ -1,20 +1,22 @@
-<script context="module">
+<script module>
 	export const code = `
 	<Carousel {slides}>
-		<Slide slot="slide" let:slide {...slide} />
-		<div
-			slot="progress"
-			let:progress
-			let:scrollTo
-			data-progress
-			on:pointerdown={scrollTo}
-			class="absolute left-1/4 -bottom-5 w-1/2 overflow-hidden cursor-pointer  h-2  justify-center flex items-center z-10 bg-slate-200 rounded-sm"
-		>
+		{#snippet slide({ slide })}
+			<Slide {...slide} />
+		{/snippet}
+
+		{#snippet progress({ progress, scrollTo })}
 			<div
-				style:transform={\`scaleX(\${progress}%)\`}
-				class="w-full h-full pointer-events-none transition-all origin-left bg-primary-focus"
-			/>
-		</div>
+				data-progress
+				onpointerdown={scrollTo}
+				class="absolute left-1/4 -bottom-5 w-1/2 overflow-hidden cursor-pointer h-2 justify-center flex items-center z-10 rounded-sm bg-slate-500"
+			>
+				<div
+					style:transform={\`scaleX(\${progress}%)\`}
+					class="w-full h-full pointer-events-none transition-all ease-linear origin-left bg-slate-200"
+				></div>
+			</div>
+		{/snippet}
 	</Carousel>
 	`;
 </script>
@@ -26,19 +28,20 @@
 </script>
 
 <Carousel {slides}>
-	<Slide slot="slide" let:slide {...slide} />
+	{#snippet slide({ slide })}
+		<Slide {...slide} />
+	{/snippet}
 
-	<div
-		slot="progress"
-		let:progress
-		let:scrollTo
-		data-progress
-		on:pointerdown={scrollTo}
-		class="absolute left-1/4 -bottom-5 w-1/2 overflow-hidden cursor-pointer h-2 justify-center flex items-center z-10 rounded-sm bg-slate-500"
-	>
+	{#snippet progress({ progress, scrollTo })}
 		<div
-			style:transform={`scaleX(${progress}%)`}
-			class="w-full h-full pointer-events-none transition-all ease-linear origin-left bg-slate-200"
-		/>
-	</div>
+			data-progress
+			onpointerdown={scrollTo}
+			class="absolute left-1/4 -bottom-5 w-1/2 overflow-hidden cursor-pointer h-2 justify-center flex items-center z-10 rounded-sm bg-slate-500"
+		>
+			<div
+				style:transform={`scaleX(${progress}%)`}
+				class="w-full h-full pointer-events-none transition-all ease-linear origin-left bg-slate-200"
+			></div>
+		</div>
+	{/snippet}
 </Carousel>
